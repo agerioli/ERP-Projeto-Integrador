@@ -8,3 +8,14 @@ V03/
 # Arquivos de teste
 teste.php
 gestao_suprimentos copy.php
+
+# Dumps e scripts SQL locais
+database/*.sql
+
+# Manter no Git apenas os schemas públicos
+!database/schema_v01.sql
+!database/schema_v02.sql
+!database/schema_v03.sql
+
+# Histórico de projeto vazio/temporário
+docs/Historico_do_Projeto.md
