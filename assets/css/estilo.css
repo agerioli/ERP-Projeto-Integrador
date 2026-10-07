@@ -1346,3 +1346,535 @@ body.login-page{
 
 .msg-btn-copiar:hover    { background: var(--blue-d); }
 .msg-btn-copiar:disabled { background: var(--green); cursor: default; }
+/* =============================================================
+   RESPONSIVIDADE GERAL — notebook, monitor grande, tablet e celular
+   ============================================================= */
+
+html {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  width: 100%;
+  min-width: 0;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  max-width: 100%;
+}
+
+/* Evita que tabelas largas estourem a página; o wrapper recebe scroll */
+.table-wrap,
+.tabela-container,
+.guia-carousel,
+.consulta-resultados {
+  max-width: 100%;
+}
+
+/* Conteúdo aproveita monitores grandes sem perder legibilidade */
+.content {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Botão de menu móvel */
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--g300);
+  border-radius: var(--rs);
+  background: #fff;
+  color: var(--g800);
+  cursor: pointer;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+/* =============================================================
+   NOTEBOOKS / TELAS MENORES
+   ============================================================= */
+@media (max-width: 1200px) {
+  :root {
+    --sw: 210px;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .three-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .conf-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tpl-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   TABLET / CELULAR
+   ============================================================= */
+@media (max-width: 900px) {
+
+  body {
+    display: block;
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .sidebar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: min(280px, 86vw);
+    height: 100dvh;
+    transform: translateX(-105%);
+    transition: transform .22s ease;
+    box-shadow: 8px 0 25px rgba(0,0,0,.15);
+  }
+
+  body.menu-aberto .sidebar {
+    transform: translateX(0);
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .main {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    min-height: var(--th);
+    height: auto;
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
+  .topbar > div:first-child {
+    min-width: 0;
+  }
+
+  .topbar-title,
+  .topbar-sub {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .content {
+    width: 100%;
+    max-width: none;
+    padding: 16px;
+    overflow: visible;
+  }
+
+  .card-lista-header,
+  .card-lista-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .form-grid,
+  .form-editar-grid,
+  .filtro-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full,
+  .form-grid .full {
+    grid-column: auto;
+  }
+
+  .size-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .three-col,
+  .metrics-grid,
+  .conf-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  .feat-img-area {
+    min-height: 110px;
+  }
+
+  .conf-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .conf-score-lbl {
+    text-align: left;
+  }
+
+  .barra-ferramentas,
+  .consulta-acoes,
+  .form-acoes {
+    align-items: stretch;
+  }
+
+  .busca {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .busca button,
+  .barra-ferramentas .btn,
+  .consulta-acoes .btn {
+    white-space: nowrap;
+  }
+
+  .table-wrap,
+  .tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabela-container table,
+  .table-wrap table {
+    min-width: 700px;
+  }
+
+  #lista-clientes {
+    min-width: 700px;
+  }
+
+  .data-row,
+  .consent-row {
+    min-width: 700px;
+  }
+
+  .guia-carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .guia-img-card {
+    min-width: min(300px, 82vw);
+    max-width: min(300px, 82vw);
+  }
+
+  .conf-wrap {
+    min-height: auto;
+    margin: -16px;
+  }
+
+  .conf-inner {
+    padding: 16px;
+  }
+}
+
+/* =============================================================
+   CELULARES
+   ============================================================= */
+@media (max-width: 600px) {
+
+  :root {
+    --th: 56px;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .topbar {
+    padding: 8px 12px;
+  }
+
+  .card,
+  .card-lista,
+  .form-section,
+  .glass {
+    border-radius: 8px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .card-lista-header,
+  .card-lista-body {
+    padding: 14px;
+  }
+
+  .tabs,
+  .suprimentos-tabs,
+  .cat-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .tab-btn,
+  .suprimentos-tabs a,
+  .cat-tab {
+    flex-shrink: 0;
+  }
+
+  .barra-ferramentas,
+  .busca,
+  .consulta-acoes,
+  .form-acoes {
+    flex-direction: column;
+  }
+
+  .busca button,
+  .consulta-acoes .btn,
+  .form-acoes .btn,
+  .btn-salvar {
+    width: 100%;
+  }
+
+  .acoes {
+    flex-wrap: wrap;
+  }
+
+  .form-grid,
+  .form-editar-grid {
+    gap: 12px;
+  }
+
+  .size-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .paginacao {
+    gap: 5px;
+  }
+
+  .pagina {
+    padding: 7px 10px;
+  }
+
+  .featured-card .feat-body {
+    padding: 14px;
+  }
+
+  .guia-img-wrap {
+    height: 180px;
+  }
+
+  .modal-content {
+    width: calc(100% - 24px);
+    max-width: 400px;
+    margin: 15% auto;
+  }
+
+  .img-modal img {
+    max-width: 94%;
+    max-height: 82%;
+  }
+
+  .close-btn {
+    top: 10px;
+    right: 16px;
+  }
+}
+
+/* =============================================================
+   GESTÃO DE SUPRIMENTOS — layout responsivo
+   ============================================================= */
+.suprimentos-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.suprimentos-container .form-box,
+.suprimentos-container .tabela-container {
+  width: 100%;
+}
+
+.suprimentos-container .tabela-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.suprimentos-container .tabela {
+  min-width: 850px;
+}
+
+@media (max-width: 900px) {
+  .suprimentos-container {
+    padding: 0;
+  }
+
+  .suprimentos-container .form-grid,
+  .suprimentos-container .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .suprimentos-container .form-group.full {
+    grid-column: auto;
+  }
+
+  .suprimentos-header {
+    align-items: flex-start;
+  }
+
+  .suprimentos-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .suprimentos-tabs a {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .suprimentos-container .form-box {
+    padding: 16px;
+  }
+
+  .suprimentos-container .tabela {
+    min-width: 850px;
+  }
+}
+
+/* ── Módulo Gestão de Suprimentos / Início ── */
+.home-module-card {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.home-module-icon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r);
+  background: var(--blue-l);
+  font-size: 25px;
+}
+.home-module-content { flex: 1; min-width: 0; }
+.home-module-title { font-size: 15px; font-weight: 600; color: var(--g900); }
+.home-module-desc { margin-top: 4px; font-size: 12px; line-height: 1.5; color: var(--g600); }
+.home-module-btn { flex-shrink: 0; text-decoration: none; }
+
+@media (max-width: 600px) {
+  .home-module-card { align-items: flex-start; flex-wrap: wrap; }
+  .home-module-content { flex-basis: calc(100% - 64px); }
+  .home-module-btn { width: 100%; text-align: center; }
+}
+
+/* =============================================================
+   GESTÃO DE SUPRIMENTOS — componentes
+   ============================================================= */
+.suprimentos-heading { margin-bottom: 18px; }
+.suprimentos-heading h1 { font-size: 20px; margin: 0 0 4px; }
+.suprimentos-heading p { color: var(--g600); font-size: 13px; }
+.suprimentos-message { padding: 12px 16px; border-radius: var(--rs); margin-bottom: 16px; }
+.suprimentos-message.success { background: var(--green-l); color: var(--green); }
+.suprimentos-message.error { background: var(--red-l); color: var(--red); }
+.suprimentos-info { background: var(--blue-l); border: 1px solid var(--blue-m); color: var(--blue-d); border-radius: var(--r); padding: 13px 16px; line-height: 1.55; margin-bottom: 16px; font-size: 12px; }
+.suprimentos-tabs { display:flex; gap:5px; border-bottom:1px solid var(--g200); margin-bottom:18px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.suprimentos-tabs a { flex:0 0 auto; padding:10px 15px; text-decoration:none; color:var(--g600); border-radius:7px 7px 0 0; font-size:13px; font-weight:600; white-space:nowrap; }
+.suprimentos-tabs a:hover { background:var(--g50); color:var(--g800); }
+.suprimentos-tabs a.active { background:var(--blue); color:#fff; }
+.suprimentos-form-box { background:#fff; border:1px solid var(--g200); border-radius:var(--r); padding:18px; margin-bottom:18px; }
+.suprimentos-form-box h2 { font-size:15px; margin:0 0 16px; color:var(--g900); }
+.suprimentos-form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+.suprimentos-form-grid > div { min-width:0; }
+.suprimentos-form-grid .full { grid-column:1/-1; }
+.suprimentos-form-grid label { display:block; font-size:11px; font-weight:600; color:var(--g600); margin-bottom:5px; }
+.suprimentos-form-grid input,.suprimentos-form-grid select,.suprimentos-form-grid textarea { width:100%; min-width:0; padding:9px 10px; border:1px solid var(--g300); border-radius:var(--rs); background:var(--g50); color:var(--g900); font:inherit; font-size:13px; }
+.suprimentos-form-grid textarea { min-height:78px; resize:vertical; }
+.suprimentos-form-grid input:focus,.suprimentos-form-grid select:focus,.suprimentos-form-grid textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(24,95,165,.08); }
+.checkbox-label { display:flex !important; align-items:center; gap:7px; height:38px; }
+.checkbox-label input { width:auto !important; }
+.suprimentos-table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--g200); border-radius:var(--r); background:#fff; }
+.suprimentos-table { width:100%; min-width:850px; border-collapse:collapse; font-size:12px; }
+.suprimentos-table th { background:var(--g50); padding:11px 12px; text-align:left; white-space:nowrap; color:var(--g700); border-bottom:1px solid var(--g200); }
+.suprimentos-table td { padding:11px 12px; border-bottom:1px solid var(--g100); vertical-align:middle; color:var(--g800); }
+.suprimentos-table tbody tr:last-child td { border-bottom:none; }
+.suprimentos-table tbody tr:hover { background:#fafcff; }
+.suprimentos-table td small { display:block; color:var(--g500); margin-top:3px; max-width:250px; white-space:normal; }
+.estoque-tag,.status-tag { display:inline-block; padding:3px 8px; border-radius:20px; font-size:10px; font-weight:700; white-space:nowrap; }
+.estoque-tag.ok { background:var(--green-l); color:var(--green); }
+.estoque-tag.baixo { background:var(--amber-l); color:var(--amber); }
+.status-tag { background:var(--g100); color:var(--g700); }
+.empty { text-align:center !important; padding:30px !important; color:var(--g500) !important; }
+@media (max-width:700px) {
+  .suprimentos-form-grid { grid-template-columns:1fr; }
+  .suprimentos-form-grid .full { grid-column:auto; }
+  .suprimentos-form-box { padding:14px; }
+  .suprimentos-heading h1 { font-size:18px; }
+}
+
+/* ── Páginas de cliente abertas em /clientes/ ── */
+.nested-client-card { max-width: 1000px; }
+.nested-client-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.nested-client-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.nested-client-grid > div { background:var(--g50); border:1px solid var(--g200); border-radius:var(--rs); padding:12px; min-width:0; }
+.nested-client-grid strong { display:block; font-size:10px; text-transform:uppercase; color:var(--g500); margin-bottom:4px; }
+.nested-client-grid span { display:block; font-size:13px; color:var(--g900); overflow-wrap:anywhere; }
+@media (max-width:600px) {
+  .nested-client-grid { grid-template-columns:1fr; }
+  .nested-client-card { padding:14px; }
+  .nested-client-title { font-size:18px; }
+}
+
+/* ==========================================================
+   Módulos novos: Estoque + Suprimentos ERP
+   ========================================================== */
+.estoque-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.estoque-kpis .metric-card{min-height:110px}.estoque-kpis .kpi-nome{font-size:18px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric-card span{display:block;font-size:11px;color:var(--g600);font-weight:600}.metric-card strong{display:block;font-size:27px;line-height:1.1;margin-top:8px;color:var(--g900)}.metric-card small{display:block;margin-top:7px;color:var(--g500)}
+.module-grid-2{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;margin-bottom:18px}.quick-actions{display:flex;flex-wrap:wrap;gap:9px}.alert-list{display:flex;flex-direction:column;gap:8px}.alert-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--g200);border-radius:var(--rs);background:var(--g50)}.alert-row strong{display:block;font-size:13px;color:var(--g900)}.alert-row small{display:block;color:var(--g500);margin-top:3px}.empty-state{padding:18px;color:var(--g500);text-align:center;border:1px dashed var(--g300);border-radius:var(--rs)}.form-help{margin:-7px 0 15px;color:var(--g500);font-size:12px}.estoque-tag.atencao{background:var(--amber-l);color:var(--amber)}.estoque-tag.critico{background:#fde8e8;color:#b42318}.suprimentos-message.error{background:#fde8e8;color:#b42318;border:1px solid #f5c2c0}.suprimentos-message.success{background:#eaf7ee;color:#18733b;border:1px solid #c9e9d3}
+@media(max-width:900px){.estoque-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.module-grid-2{grid-template-columns:1fr}}
+@media(max-width:560px){.estoque-kpis{grid-template-columns:1fr}.quick-actions .btn{width:100%}}
+
+/* Ação de exclusão na Gestão de Suprimentos */
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+}
+.btn-danger:hover {
+    background: #bb2d3b;
+    border-color: #b02a37;
+    color: #fff;
+}

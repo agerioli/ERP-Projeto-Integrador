@@ -368,6 +368,27 @@ try {
             }
         }
     </style>
+
+<style>
+@media (max-width: 900px) {
+    body { padding: 12px; }
+    .container { width: 100%; max-width: 100%; }
+    .card-body { padding: 20px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .tabela-container, .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 850px; }
+}
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .card-header { padding: 18px 14px; }
+    .card-header h1 { font-size: 20px; }
+    .card-body { padding: 12px; }
+    .configuracao { padding: 14px; }
+    select, input { font-size: 16px; }
+    .btn { width: 100%; margin-bottom: 6px; }
+}
+</style>
+
 </head>
 <body>
     <div class="container">

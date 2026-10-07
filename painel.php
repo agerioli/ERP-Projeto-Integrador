@@ -19,7 +19,7 @@ include 'includes/sidebar.php';
     <!-- TOPBAR -->
     <div class="topbar">
       <div>
-        <div class="topbar-title">Painel Geral</div>
+        <div class="topbar-title">Gestão LGPD</div>
         <div class="topbar-sub">
           Olá, <?= htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário') ?>
         </div>

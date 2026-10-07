@@ -1,0 +1,13 @@
+PUBLICAÇÃO NO INFINITYFREE
+
+1. Antes de enviar os arquivos, faça backup do banco online pelo phpMyAdmin.
+2. Abra config/conexao.php e substitua COLOQUE_AQUI_A_SENHA_DO_INFINITYFREE pela senha atual do MySQL do InfinityFree.
+3. Envie o CONTEÚDO desta pasta Site para htdocs do InfinityFree (não envie a pasta Site dentro de htdocs).
+4. O endereço online deve abrir na raiz do domínio.
+5. No localhost, o sistema continua usando /Site e projetointegrador_dev.
+
+BANCO
+O arquivo database/erp_modulos_estoque_suprimentos.sql é para criar as tabelas novas do ERP sem apagar as tabelas legadas. Não execute ERP_DEFINITIVO_RESET.sql em produção.
+
+DADOS DO LOCAL
+Para levar os dados do banco local para o InfinityFree, exporte no phpMyAdmin do XAMPP o banco projetointegrador_dev em formato SQL e depois importe esse arquivo no banco if0_41748767_projetointegrador do InfinityFree, após fazer backup do banco online.

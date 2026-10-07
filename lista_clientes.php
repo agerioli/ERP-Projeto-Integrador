@@ -345,6 +345,30 @@ try {
             }
         }
     </style>
+
+<style>
+@media (max-width: 900px) {
+    body { padding: 12px; }
+    .container { width: 100%; max-width: 100%; border-radius: 10px; }
+    .header { padding: 22px 16px; }
+    .header h1 { font-size: 22px; }
+    .content { padding: 16px; }
+    .tabela-container { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 900px; }
+}
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .header { align-items: stretch; }
+    .header h1 { font-size: 20px; }
+    .btn-cadastro { width: 100%; text-align: center; }
+    .content { padding: 10px; }
+    .barra-ferramentas { padding: 12px; }
+    .busca { width: 100%; min-width: 0; flex-direction: column; }
+    .busca button { width: 100%; }
+    .estatisticas { width: 100%; flex-wrap: wrap; gap: 8px; }
+}
+</style>
+
 </head>
 <body>
     <div class="container">

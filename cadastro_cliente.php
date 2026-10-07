@@ -230,6 +230,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     </style>
+
+<style>
+@media (max-width: 900px) {
+    body { padding: 12px; }
+    .container { width: 100%; max-width: 100%; border-radius: 10px; }
+    .header { padding: 22px 16px; }
+    .header h1 { font-size: 22px; }
+    .content { padding: 18px; }
+}
+@media (max-width: 600px) {
+    body { padding: 8px; }
+    .header h1 { font-size: 20px; }
+    .header p { font-size: 13px; }
+    .content { padding: 12px; }
+    .form-section { padding: 14px; margin-bottom: 16px; }
+    .form-section h3 { font-size: 16px; }
+    input, select { font-size: 16px; }
+    button { font-size: 15px; padding: 13px 18px; }
+}
+</style>
+
 </head>
 <body>
     <div class="container">

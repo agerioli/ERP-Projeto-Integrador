@@ -1,0 +1,50 @@
+ATUALIZAÇÃO GESTÃO DE ESTOQUE V2
+
+1. Faça backup do banco local antes de atualizar.
+2. Substitua os arquivos do projeto pelos arquivos deste ZIP.
+3. No phpMyAdmin local, selecione o banco projetointegrador_dev.
+4. Importe/executa o arquivo:
+   database/MIGRACAO_GESTAO_ESTOQUE_V2.sql
+
+IMPORTANTE
+- A tabela legada devolucoes NÃO é alterada.
+- encomendas, clientes e demais módulos são preservados.
+- categorias_produtos permanece no banco por compatibilidade, mas a nova Gestão de Estoque não usa categoria.
+- estoque_seguranca, ponto_reposicao e estoque_maximo continuam no banco antigo por compatibilidade, mas NÃO aparecem nem são usados pela nova tela.
+
+NOVO CADASTRO DE PRODUTO
+- Código
+- SKU
+- Nome
+- Unidade
+- Estoque mínimo LOCAL
+- Estoque mínimo MERCADO LIVRE
+- Fornecedor
+- Preço de venda
+- Estoque inicial Local/ML
+
+COMPRAS
+- Fornecedor, produto, data, quantidade, valor unitário, pedido/NF.
+- Compra aumenta o estoque LOCAL.
+- Editar e excluir recalculam o estoque e registram movimentação.
+
+VENDAS
+- Produto, data, quantidade, origem (Local/ML), valor unitário.
+- Venda Local baixa estoque LOCAL.
+- Venda Mercado Livre baixa estoque ML.
+- Editar/excluir recalcula o estoque.
+
+MERCADO LIVRE
+- Gatilho: estoque ML <= 10% do mínimo ML.
+- Meta: maior entre 3x o mínimo ML e 5 dias da média diária de vendas dos últimos 30 dias.
+- Transferência preserva o mínimo local.
+- Se o local não for suficiente, o sistema indica COMPRA.
+
+DEVOLUÇÕES
+- Produto, data, quantidade, origem, motivo, avaria e observação.
+- Sem avaria: retorna ao estoque LOCAL.
+- Com avaria: não retorna ao estoque e é registrada como PERDA com valor da perda pelo custo atual do produto.
+- Editar/excluir recalcula o estoque quando aplicável.
+
+PARA TESTAR
+http://localhost/Site/gestao_estoque.php

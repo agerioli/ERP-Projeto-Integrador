@@ -22,24 +22,39 @@ require 'auth/verifica_login.php';
 
     <div class="content">
 
-        <div class="card">
-            <div style="font-size:20px;font-weight:600;color:var(--g900)">
-                Sistema de Gestão LGPD
+        <div class="card home-module-card">
+            <div class="home-module-icon">📦</div>
+            <div class="home-module-content">
+                <div class="home-module-title">Gestão de Suprimentos</div>
+                <div class="home-module-desc">
+                    Cadastre fornecedores e suprimentos, acompanhe estoque mínimo e atual e registre demandas de compra.
+                </div>
             </div>
-
-            <div style="margin-top:10px;font-size:13px;color:var(--g600);line-height:1.6">
-                Este sistema foi desenvolvido para auxiliar pequenas empresas e comércios na organização
-                e gestão de dados pessoais de clientes, garantindo maior conformidade com a Lei Geral de
-                Proteção de Dados (LGPD).
-                <br><br>
-                Através da plataforma, é possível registrar informações de clientes, controlar
-                consentimentos, acompanhar solicitações dos titulares e visualizar o nível de
-                conformidade da empresa de forma simples e prática.
-                <br><br>
-                O objetivo é facilitar a adequação à LGPD, reduzindo riscos e promovendo mais segurança
-                no tratamento de dados pessoais.
-            </div>
+            <a href="gestao_suprimentos.php" class="btn btn-pri home-module-btn">Acessar Gestão →</a>
         </div>
+
+        <div class="card home-module-card">
+            <div class="home-module-icon">📊</div>
+            <div class="home-module-content">
+                <div class="home-module-title">Gestão de Estoque</div>
+                <div class="home-module-desc">
+                    Controle o estoque físico e do Mercado Livre, registre entradas, saídas, devoluções, perdas e acompanhe a necessidade de reposição.
+                </div>
+            </div>
+            <a href="gestao_estoque.php" class="btn btn-pri home-module-btn">Acessar Gestão →</a>
+        </div>
+
+        <div class="card home-module-card">
+            <div class="home-module-icon">🔐</div>
+            <div class="home-module-content">
+                <a href="painel.php" class="home-module-title" style="text-decoration:none;color:inherit;">Gestão LGPD</a>
+                <div class="home-module-desc">
+                    Faça a gestão das solicitações de LGPD dos clientes, acompanhe consentimentos e consulte informações de conformidade.
+                </div>
+            </div>
+            <a href="painel.php" class="btn btn-pri home-module-btn">Acessar Gestão →</a>
+        </div>
+
 
     </div>
 

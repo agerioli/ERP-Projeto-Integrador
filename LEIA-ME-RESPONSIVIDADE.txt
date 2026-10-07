@@ -1,0 +1,43 @@
+PACOTE ATUALIZADO — SISTEMA LGPD + GESTÃO DE SUPRIMENTOS
+
+O pacote foi revisado para telas de notebook, monitores grandes, tablets e celulares.
+
+Principais ajustes:
+- rolagem vertical real no conteúdo do sistema, inclusive na Gestão de Suprimentos;
+- tabelas largas usam rolagem horizontal local, sem estourar a página;
+- formulários refluem de 3/2 colunas para 1 coluna conforme a largura;
+- menu lateral vira menu móvel em telas menores;
+- botão de menu móvel fixo e acessível;
+- páginas dentro de /clientes/ passaram a usar caminhos corretos de CSS/JS;
+- navegação da barra lateral funciona também em páginas dentro de subpastas;
+- página Gestão de Suprimentos adaptada para notebook e celular;
+- páginas Cadastro, Lista e Consulta Avançada de Clientes receberam reforços responsivos;
+- corrigido erro JavaScript no Cadastro de Cliente (then/console.log);
+- corrigidos links Ver/Editar/Excluir da lista para usar o ID numérico esperado pelas páginas de cliente.
+
+IMPORTANTE SOBRE O BANCO:
+- O arquivo config/conexao.php NÃO foi incluído neste pacote de atualização para não sobrescrever sua configuração local/produção.
+- Preserve o seu config/conexao.php atual.
+- Existe config/conexao.exemplo.php apenas como referência.
+- database/gestao_suprimentos.sql contém as tabelas do novo módulo.
+
+INSTALAÇÃO LOCAL:
+1. Faça backup da pasta atual C:\xampp\htdocs\Site.
+2. Extraia este pacote.
+3. Copie os arquivos para C:\xampp\htdocs\Site, substituindo os arquivos existentes.
+4. NÃO substitua config/conexao.php pelo exemplo.
+5. Se ainda não criou as tabelas do módulo, execute database/gestao_suprimentos.sql no phpMyAdmin local.
+6. Acesse http://localhost/Site/
+7. Teste com zoom 100% em notebook e depois pelo celular.
+
+INSTALAÇÃO NO SERVIDOR:
+1. Faça backup do site atual.
+2. Envie os arquivos do pacote, preservando config/conexao.php de produção.
+3. Execute database/gestao_suprimentos.sql no banco de produção.
+4. Teste login, clientes, devoluções, encomendas, painel e Gestão de Suprimentos.
+
+
+=== ERP DEFINITIVO ===
+Para zerar e recriar somente as tabelas novas do ERP no banco local, execute database/ERP_DEFINITIVO_RESET.sql no phpMyAdmin.
+NAO execute este script em producao. Ele preserva baseinformacoes, usuarios, encomendas e devolucoes, mas recria as tabelas novas do ERP.
+Depois de importar o SQL, use gestao_suprimentos.php e gestao_estoque.php.
