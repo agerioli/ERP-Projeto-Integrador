@@ -44,14 +44,14 @@ if ($method === 'POST' && $acao !== null) {
 
             $sql = "INSERT INTO baseinformacoes (
                 cpf, nome_completo, sexo, data_de_nascimento,
-                autorizacao, cep, endereco, bairro, cidade, estado,
+                autorizacao, cep, endereco, numero, complemento, bairro, cidade, estado,
                 e_mail, celular_whatsapp,
                 forma_de_pagamento_preferida, cor_preferida, tecido_preferido,
                 tamanho_de_camiseta, tamanho_de_calca, tamanho_de_sapato,
                 insertdate
             ) VALUES (
                 :cpf, :nome, :sexo, :nascimento,
-                :autorizacao, :cep, :endereco, :bairro, :cidade, :estado,
+                :autorizacao, :cep, :endereco, :numero, :complemento, :bairro, :cidade, :estado,
                 :email, :celular,
                 :pagamento, :cor, :tecido,
                 :camiseta, :calca, :sapato,
@@ -67,6 +67,8 @@ if ($method === 'POST' && $acao !== null) {
                 ':autorizacao' => $_POST['autorizacao'],
                 ':cep' => $cep,
                 ':endereco' => $_POST['endereco'],
+                ':numero' => trim($_POST['numero'] ?? ''),
+                ':complemento' => trim($_POST['complemento'] ?? '') ?: null,
                 ':bairro' => $_POST['bairro'],
                 ':cidade' => $_POST['cidade'],
                 ':estado' => $_POST['estado'],
@@ -103,6 +105,8 @@ if ($method === 'POST' && $acao !== null) {
                 bairro = ?,
                 cidade = ?,
                 estado = ?,
+                numero = ?,
+                complemento = ?,
                 e_mail = ?,
                 celular_whatsapp = ?
             WHERE id = ?";
@@ -120,6 +124,8 @@ if ($method === 'POST' && $acao !== null) {
                 $_POST['bairro'],
                 $_POST['cidade'],
                 $_POST['estado'],
+                trim($_POST['numero'] ?? ''),
+                trim($_POST['complemento'] ?? '') ?: null,
                 $_POST['e_mail'],
                 preg_replace('/\D/', '', $_POST['celular_whatsapp']),
                 $_POST['id']

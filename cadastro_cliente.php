@@ -483,23 +483,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         });
         
-        // Buscar endereço pelo CEP (opcional)
-        document.getElementById('cep').addEventListener('blur', function() {
-            let cep = this.value.replace(/\D/g, '');
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    ..log(data => {
-                        if (!data.erro) {
-                            document.querySelector('[name="endereco"]').value = data.logradouro;
-                            document.querySelector('[name="bairro"]').value = data.bairro;
-                            document.querySelector('[name="cidade"]').value = data.localidade;
-                            document.querySelector('[name="estado"]').value = data.uf;
-                        }
-                    })
-                    .catch(error => console.log('Erro ao buscar CEP'));
-            }
-        });
+        // A consulta de CEP da V03 é centralizada em assets/js/funcoes.js.
     </script>
 </body>
 </html>

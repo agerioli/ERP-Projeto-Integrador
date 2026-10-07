@@ -491,42 +491,35 @@ unset($_SESSION['cadastro_msg'], $_SESSION['cadastro_tipo']);
           <div class="filtro-grid">
             <div class="cad-field">
               <label>CEP <span class="cad-req">*</span></label>
-              <input type="text" name="cep" id="cep" required placeholder="00000-000" maxlength="9">
+              <input type="text" name="cep" id="cep" required placeholder="00000-000" maxlength="9" inputmode="numeric">
+              <small id="cep-status" class="cep-status" aria-live="polite"></small>
             </div>
             <div class="cad-field">
               <label>Estado <span class="cad-req">*</span></label>
-              <select name="estado" required>
-                <option value="">Selecione</option>
-                <option value="AC">Acre</option><option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option><option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option><option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option><option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option><option value="PA">Pará</option>
-                <option value="PB">Paraíba</option><option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option><option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option><option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option><option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-              </select>
-            </div>
-            <div class="cad-field">
-              <label>Cidade <span class="cad-req">*</span></label>
-              <input type="text" name="cidade" required placeholder="Digite a cidade">
+              <input type="text" name="estado" id="estado" class="endereco-auto" maxlength="2" readonly required>
             </div>
           </div>
 
           <div class="filtro-grid" style="margin-top: 12px;">
             <div class="cad-field">
+              <label>Cidade <span class="cad-req">*</span></label>
+              <input type="text" name="cidade" id="cidade" class="endereco-auto" required readonly>
+            </div>
+            <div class="cad-field">
               <label>Bairro <span class="cad-req">*</span></label>
-              <input type="text" name="bairro" required placeholder="Digite o bairro">
+              <input type="text" name="bairro" id="bairro" class="endereco-auto" required readonly>
+            </div>
+            <div class="cad-field">
+              <label>Número <span class="cad-req">*</span></label>
+              <input type="text" name="numero" id="numero" required placeholder="Ex.: 123">
+            </div>
+            <div class="cad-field">
+              <label>Complemento</label>
+              <input type="text" name="complemento" id="complemento" placeholder="Apto., sala, bloco...">
             </div>
             <div class="cad-field" style="grid-column: span 2;">
-              <label>Endereço <span class="cad-req">*</span></label>
-              <input type="text" name="endereco" required placeholder="Rua, número, complemento">
+              <label>Logradouro <span class="cad-req">*</span></label>
+              <input type="text" name="endereco" id="endereco" class="endereco-auto" required readonly>
             </div>
           </div>
         </div>
@@ -665,8 +658,14 @@ unset($_SESSION['cadastro_msg'], $_SESSION['cadastro_tipo']);
         <label>CEP</label>
         <input type="text" name="cep" id="e-cep">
 
-        <label>Endereço</label>
+        <label>Logradouro</label>
         <input type="text" name="endereco" id="e-endereco">
+
+        <label>Número</label>
+        <input type="text" name="numero" id="e-numero">
+
+        <label>Complemento</label>
+        <input type="text" name="complemento" id="e-complemento">
 
         <label>Bairro</label>
         <input type="text" name="bairro" id="e-bairro">

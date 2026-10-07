@@ -1,0 +1,24 @@
+ATUALIZAÇÃO V3 - FORNECEDOR DE PRODUTOS SEPARADO
+
+Esta atualização corrige a Gestão de Estoque para não usar os fornecedores cadastrados na Gestão de Suprimentos.
+
+1. Banco
+- Execute database/MIGRACAO_FORNECEDOR_PRODUTOS_V3.sql no banco projetointegrador_dev.
+- É uma migração incremental: não apaga tabelas legadas nem fornecedores de suprimentos.
+- Cria fornecedores_produtos, exclusivo para produtos.
+- Adiciona fornecedor_produto_id em produtos e compras.
+- Torna compras.fornecedor_id opcional, mantendo-o para compras de suprimentos/compatibilidade.
+
+2. Produto
+- O campo "Fornecedor do produto" usa somente fornecedores_produtos.
+- Ao cadastrar produto, é possível escolher "+ Cadastrar novo fornecedor" e informar o nome.
+- O novo fornecedor é criado automaticamente e vinculado ao produto.
+- Não utiliza categoria, estoque de segurança, ponto de reposição ou estoque máximo.
+
+3. Compras de produtos
+- O fornecedor da tela é exclusivamente fornecedor de produto.
+- Compras de produtos não usam mais o fornecedor da Gestão de Suprimentos.
+- Histórico de compras mostra o fornecedor do produto.
+
+4. Tabelas de suprimentos
+- A tabela fornecedores e a relação fornecedor_suprimentos permanecem intactas.

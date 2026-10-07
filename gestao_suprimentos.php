@@ -21,7 +21,7 @@ function nf($v) {
 }
 
 $fornecedores = $pdo->query(
-    "SELECT id, razao_social, nome_fantasia, cnpj, contato, telefone, email, cidade, estado, status
+    "SELECT id, razao_social, nome_fantasia, cnpj, contato, telefone, email, cep, endereco, numero, complemento, bairro, cidade, estado, status
      FROM fornecedores
      ORDER BY COALESCE(NULLIF(nome_fantasia,''), razao_social)"
 )->fetchAll();
@@ -102,7 +102,7 @@ $editarFornecedor = null;
 if ($aba === 'fornecedores' && isset($_GET['editar_fornecedor'])) {
     $id = (int) $_GET['editar_fornecedor'];
     if ($id > 0) {
-        $st = $pdo->prepare("SELECT id, razao_social, nome_fantasia, cnpj, contato, telefone, email, cidade, estado, observacoes, status FROM fornecedores WHERE id = ?");
+        $st = $pdo->prepare("SELECT id, razao_social, nome_fantasia, cnpj, contato, telefone, email, cep, endereco, numero, complemento, bairro, cidade, estado, observacoes, status FROM fornecedores WHERE id = ?");
         $st->execute([$id]);
         $editarFornecedor = $st->fetch() ?: null;
     }
@@ -365,8 +365,13 @@ require_once __DIR__ . '/includes/sidebar.php';
                             <div><label>Contato</label><input name="contato" value="<?= h($editarFornecedor['contato'] ?? '') ?>"></div>
                             <div><label>Telefone</label><input name="telefone" value="<?= h($editarFornecedor['telefone'] ?? '') ?>"></div>
                             <div><label>E-mail</label><input type="email" name="email" value="<?= h($editarFornecedor['email'] ?? '') ?>"></div>
-                            <div><label>Cidade</label><input name="cidade" value="<?= h($editarFornecedor['cidade'] ?? '') ?>"></div>
-                            <div><label>Estado</label><input name="estado" maxlength="2" value="<?= h($editarFornecedor['estado'] ?? '') ?>"></div>
+                            <div><label>CEP *</label><input id="cep_fornecedor" name="cep" inputmode="numeric" maxlength="9" value="<?= h($editarFornecedor['cep'] ?? '') ?>" required><small id="cep-status-fornecedor" class="cep-status" aria-live="polite"></small></div>
+                            <div><label>Logradouro</label><input id="endereco_fornecedor" class="endereco-auto" name="endereco" value="<?= h($editarFornecedor['endereco'] ?? '') ?>" readonly></div>
+                            <div><label>Número *</label><input id="numero_fornecedor" name="numero" value="<?= h($editarFornecedor['numero'] ?? '') ?>" required></div>
+                            <div><label>Complemento</label><input id="complemento_fornecedor" name="complemento" value="<?= h($editarFornecedor['complemento'] ?? '') ?>"></div>
+                            <div><label>Bairro</label><input id="bairro_fornecedor" class="endereco-auto" name="bairro" value="<?= h($editarFornecedor['bairro'] ?? '') ?>" readonly></div>
+                            <div><label>Cidade</label><input id="cidade_fornecedor" class="endereco-auto" name="cidade" value="<?= h($editarFornecedor['cidade'] ?? '') ?>" readonly></div>
+                            <div><label>Estado</label><input id="estado_fornecedor" class="endereco-auto" name="estado" maxlength="2" value="<?= h($editarFornecedor['estado'] ?? '') ?>" readonly></div>
                             <?php if ($editarFornecedor): ?>
                                 <div><label>Status</label><select name="status"><option value="ATIVO" <?= ($editarFornecedor['status'] ?? 'ATIVO') === 'ATIVO' ? 'selected' : '' ?>>Ativo</option><option value="INATIVO" <?= ($editarFornecedor['status'] ?? '') === 'INATIVO' ? 'selected' : '' ?>>Inativo</option></select></div>
                             <?php endif; ?>
@@ -731,3 +736,9 @@ require_once __DIR__ . '/includes/sidebar.php';
 </div>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  configurarBuscaCep({cep:'cep_fornecedor', endereco:'endereco_fornecedor', numero:'numero_fornecedor', complemento:'complemento_fornecedor', bairro:'bairro_fornecedor', cidade:'cidade_fornecedor', estado:'estado_fornecedor', status:'cep-status-fornecedor'});
+});
+</script>

@@ -1,0 +1,9 @@
+V03 - USO DE MATERIAIS
+
+Sugestão implementada: a baixa por consumo fica em uma tela operacional chamada "Uso de Materiais", acessível pelo botão "Registrar uso" na Gestão da Loja. Não ocupa o menu lateral e não duplica Compras.
+
+Fluxo: selecionar material, informar data, quantidade e finalidade; o sistema baixa estoque_atual, registra movimentacao_suprimentos e passa a refletir imediatamente a necessidade de compra na Gestão da Loja.
+
+A tela permite editar e excluir registros. Ao editar, o estoque anterior é estornado e o novo consumo é aplicado; ao excluir, a quantidade é devolvida ao estoque.
+
+Instalação: execute database/MIGRACAO_V03_USO_MATERIAIS.sql no mesmo banco da V03.

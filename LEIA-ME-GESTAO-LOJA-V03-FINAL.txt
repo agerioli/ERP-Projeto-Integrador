@@ -1,0 +1,49 @@
+V03 - GESTÃO DA LOJA - VERSÃO FINAL DE TESTE
+
+Esta versão consolida os ajustes da tela Gestão da Loja.
+
+ABAS:
+1. Visão Geral
+2. Mercado Livre
+3. Materiais de Uso
+4. Devolução
+5. Inventário
+6. Histórico
+
+VISÃO GERAL:
+- removidos os quatro cards superiores antigos;
+- removidas as Ações rápidas;
+- resumo mensal com seletor de mês;
+- comparação automática com o mês anterior;
+- vendas, unidades, custo, resultado, margem, perdas e ticket médio;
+- indicadores para decisão sobre compra, estoque próximo do mínimo e Mercado Livre.
+
+MERCADO LIVRE:
+- mínimo ML editável;
+- transferência manual disponível mesmo quando o produto está OK;
+- quantidade de transferência pode ser informada pelo usuário;
+- validação contra o estoque local.
+
+MATERIAIS DE USO:
+- tabela específica;
+- status COMPRAR / PRÓXIMO DO MÍNIMO / NORMAL;
+- itens COMPRAR primeiro;
+- estoque mínimo editável;
+- histórico de uso;
+- link para registrar/editar uso.
+
+INVENTÁRIO:
+- conferência de Produto de Venda;
+- conferência de Material de Uso.
+
+ACESSIBILIDADE:
+- controle identificado como Fonte;
+- somente A- e A+;
+- espaçamento maior antes do Sair.
+
+INSTALAÇÃO:
+1. Faça backup do banco e da pasta Site.
+2. Substitua a pasta Site pelo conteúdo deste ZIP.
+3. No phpMyAdmin, execute apenas database/MIGRACAO_V03_GESTAO_LOJA_FINAL.sql no banco atual.
+4. Não execute scripts RESET.
+5. Faça Ctrl+F5 no navegador.

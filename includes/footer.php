@@ -2,7 +2,7 @@
 <!-- /includes/footer.php -->
 <!-- ========================= -->
 
-<script src="<?= htmlspecialchars($assetBase ?? ($baseUrl ?? ''), ENT_QUOTES, 'UTF-8') ?>/assets/js/funcoes.js"></script>
+<script src="<?= htmlspecialchars($assetBase ?? ($baseUrl ?? ''), ENT_QUOTES, 'UTF-8') ?>/assets/js/funcoes.js?v=3.0.3"></script>
 <script>
 (function () {
     const btn = document.querySelector('.mobile-menu-toggle');

@@ -29,10 +29,12 @@ try {
         $id = (int) ($_POST['fornecedor_id'] ?? 0);
         if (!$id || trim($_POST['razao_social'] ?? '') === '') throw new Exception('Informe a razão social do fornecedor.');
         $status = ($_POST['status'] ?? 'ATIVO') === 'INATIVO' ? 'INATIVO' : 'ATIVO';
-        $st = $pdo->prepare("UPDATE fornecedores SET razao_social=?, nome_fantasia=?, cnpj=?, contato=?, telefone=?, email=?, cidade=?, estado=?, observacoes=?, status=? WHERE id=?");
+        $st = $pdo->prepare("UPDATE fornecedores SET razao_social=?, nome_fantasia=?, cnpj=?, contato=?, telefone=?, email=?, cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=?, observacoes=?, status=? WHERE id=?");
         $st->execute([
             trim($_POST['razao_social'] ?? ''), trim($_POST['nome_fantasia'] ?? ''), trim($_POST['cnpj'] ?? '') ?: null,
-            trim($_POST['contato'] ?? ''), trim($_POST['telefone'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['cidade'] ?? ''),
+            trim($_POST['contato'] ?? ''), trim($_POST['telefone'] ?? ''), trim($_POST['email'] ?? ''),
+            preg_replace('/\D+/', '', $_POST['cep'] ?? '') ?: null, trim($_POST['endereco'] ?? ''), trim($_POST['numero'] ?? ''),
+            trim($_POST['complemento'] ?? '') ?: null, trim($_POST['bairro'] ?? ''), trim($_POST['cidade'] ?? ''),
             strtoupper(trim($_POST['estado'] ?? '')) ?: null, trim($_POST['observacoes'] ?? '') ?: null, $status, $id
         ]);
         sm('Fornecedor atualizado.');
@@ -88,8 +90,8 @@ try {
 
         $s = $pdo->prepare(
             "INSERT INTO fornecedores
-                (razao_social, nome_fantasia, cnpj, contato, telefone, email, endereco, cidade, estado, observacoes)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                (razao_social, nome_fantasia, cnpj, contato, telefone, email, cep, endereco, numero, complemento, bairro, cidade, estado, observacoes)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
 
         $s->execute([
@@ -99,8 +101,9 @@ try {
             trim($_POST['contato'] ?? ''),
             trim($_POST['telefone'] ?? ''),
             trim($_POST['email'] ?? ''),
-            trim($_POST['endereco'] ?? ''),
-            trim($_POST['cidade'] ?? ''),
+            preg_replace('/\D+/', '', $_POST['cep'] ?? '') ?: null,
+            trim($_POST['endereco'] ?? ''), trim($_POST['numero'] ?? ''), trim($_POST['complemento'] ?? '') ?: null,
+            trim($_POST['bairro'] ?? ''), trim($_POST['cidade'] ?? ''),
             strtoupper(trim($_POST['estado'] ?? '')) ?: null,
             trim($_POST['observacoes'] ?? '') ?: null
         ]);

@@ -1,0 +1,10 @@
+ERP Gestão LGPD — V03
+
+1. Copie o conteúdo desta pasta para C:\xampp\htdocs\Site (substituindo a V02 após backup).
+2. Crie/ajuste o banco executando database/MIGRACAO_V03.sql no banco existente.
+3. Confirme config/conexao.php para o ambiente local.
+4. A V03 consolida o cadastro de fornecedores e passa a usar esse cadastro para produtos e suprimentos.
+5. CEP de clientes e fornecedores usa a API interna /api/cep.php, com ViaCEP e fallback BrasilAPI.
+6. A tela de fornecedor preenche automaticamente logradouro, bairro, cidade e UF; número é informado manualmente e complemento é opcional.
+7. A V03 mantém as tabelas legadas fornecedores_produtos e fornecedor_produtos para compatibilidade, mas a interface passa a usar fornecedores.
+8. Faça backup do banco antes da migração.

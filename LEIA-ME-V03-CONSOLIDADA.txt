@@ -1,0 +1,63 @@
+ERP Gestão LGPD - V03 CONSOLIDADA
+
+Esta versão consolida os ajustes solicitados durante os testes da V03.
+
+MENU
+1. Início
+2. Clientes
+3. Fornecedores
+4. Compras
+5. Vendas
+6. Gestão da Loja
+7. Gestão LGPD
+8. Guia LGPD
+9. Sair
+
+GESTÃO DA LOJA
+- Removidas as abas Produtos, Compras e Vendas.
+- Mantidas: Visão geral, Devoluções, Mercado Livre, Inventário e Histórico.
+- Visão geral indica produtos próximos/abaixo do mínimo local ou Mercado Livre e Materiais de Uso próximos/abaixo do mínimo.
+- Faixa de atenção: até 20% acima do mínimo.
+- Materiais de Uso baixados por consumo passam a alimentar a necessidade de compra.
+- Mínimo Mercado Livre pode ser editado diretamente na aba Mercado Livre.
+- Meta ML é recalculada automaticamente: maior entre 3x o mínimo ML e 5 dias da média de vendas.
+- Transferência respeita o estoque mínimo local antes de disponibilizar quantidade para envio.
+
+FORNECEDORES
+- Cadastro único.
+- CNPJ com máscara progressiva durante a digitação e validação de 14 dígitos.
+- CEP com máscara progressiva e consulta à API.
+- UF preenchida pela API.
+- Tipo: Produto de Venda, Material de Uso ou ambos.
+- Fornecedor ativo pode ser inativado e posteriormente reativado.
+
+COMPRAS
+- Valor unitário começa vazio para nova compra.
+- Edição recalcula estoque e dados relacionados.
+
+VENDAS
+- Nova venda baixa o estoque correspondente ao canal.
+- Histórico atualizado após registro.
+- Edição recalcula estorno e nova baixa.
+- Exclusão devolve a quantidade ao estoque.
+
+MATERIAL DE USO
+- Tela Uso de Materiais.
+- Data, material, quantidade e motivo.
+- Registro reduz estoque.
+- Edição e exclusão recalculam/estornam estoque.
+
+ACESSIBILIDADE / LAYOUT
+- Controle A-, A e A+.
+- Rolagem vertical global corrigida para acesso ao final das páginas.
+
+INSTALAÇÃO
+1. Faça backup da pasta atual C:\xampp\htdocs\Site.
+2. Extraia esta versão para C:\xampp\htdocs\Site.
+3. No phpMyAdmin, selecione o MESMO banco usado pela V02/V03.
+4. Execute database/MIGRACAO_V03_CONSOLIDADA.sql.
+5. Não execute ERP_DEFINITIVO_RESET.sql.
+6. Faça Ctrl+F5 no navegador.
+
+IMPORTANTE
+A migração é incremental e não deve apagar os dados existentes.

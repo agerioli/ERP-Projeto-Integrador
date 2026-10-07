@@ -13,7 +13,7 @@ if ($isLocal) {
     $host = 'sql208.infinityfree.com';
     $dbname = 'if0_41748767_projetointegrador';
     $user = 'if0_41748767';
-    $pass = 'Univesp2026';
+    $pass = 'COLOQUE_AQUI_A_SENHA_DO_INFINITYFREE';
 }
 
 try {

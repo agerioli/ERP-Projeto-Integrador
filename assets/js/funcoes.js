@@ -154,6 +154,116 @@ function operadorOptions() {
 }
 
 
+
+
+
+// ── CNPJ (V03) ───────────────────────────────────────────────
+// Exibe a máscara enquanto o usuário digita, sem alterar o valor
+// enviado ao PHP: o controller remove a pontuação antes de salvar.
+window.CNPJMask = {
+  formatar(value) {
+    // CNPJ: 00.000.000/0000-00
+    // A pontuação aparece progressivamente enquanto o usuário digita.
+    const d = String(value || '').replace(/\D/g, '').slice(0, 14);
+    if (d.length <= 2) return d;
+    if (d.length <= 5) return d.slice(0, 2) + '.' + d.slice(2);
+    if (d.length <= 8) return d.slice(0, 2) + '.' + d.slice(2, 5) + '.' + d.slice(5);
+    if (d.length <= 12) return d.slice(0, 2) + '.' + d.slice(2, 5) + '.' + d.slice(5, 8) + '/' + d.slice(8);
+    return d.slice(0, 2) + '.' + d.slice(2, 5) + '.' + d.slice(5, 8) + '/' + d.slice(8, 12) + '-' + d.slice(12, 14);
+  },
+  bind(id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.value = this.formatar(input.value);
+    const validar = () => {
+      const digits = String(input.value || '').replace(/\D/g, '');
+      if (digits.length === 0) input.setCustomValidity('Informe o CNPJ.');
+      else if (digits.length < 14) input.setCustomValidity('O CNPJ deve conter 14 dígitos.');
+      else input.setCustomValidity('');
+    };
+    input.addEventListener('input', () => {
+      input.value = this.formatar(input.value);
+      input.setSelectionRange(input.value.length, input.value.length);
+      validar();
+    });
+    input.addEventListener('blur', validar);
+    validar();
+  }
+};
+
+// ── CEP / ENDEREÇO (V03) ─────────────────────────────────────
+function configurarBuscaCep(cfg) {
+  const cepInput = document.getElementById(cfg.cep);
+  if (!cepInput) return;
+
+  const campo = nome => document.getElementById(cfg[nome]) || document.querySelector('[name="' + cfg[nome] + '"]');
+  const endereco = campo('endereco'), bairro = campo('bairro'), cidade = campo('cidade'), estado = campo('estado');
+  const status = document.getElementById(cfg.status || 'cep-status');
+  const setStatus = (msg, ok=false) => { if (status) { status.textContent = msg; status.className = 'cep-status ' + (ok ? 'ok' : 'erro'); } };
+
+  cepInput.addEventListener('input', function () {
+    let v = this.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
+    this.value = v;
+    if (v.replace(/\D/g,'').length < 8) setStatus('');
+  });
+
+  cepInput.addEventListener('blur', async function () {
+    const cep = this.value.replace(/\D/g, '');
+    if (cep.length !== 8) return;
+    setStatus('Consultando CEP...');
+    try {
+      const base = (window.SITE_BASE_URL || '').replace(/\/$/, '');
+      const r = await fetch(base + '/api/cep.php?cep=' + encodeURIComponent(cep), {headers:{'Accept':'application/json'}});
+      const d = await r.json();
+      if (!r.ok || d.erro) throw new Error(d.mensagem || 'CEP não encontrado.');
+      if (endereco) endereco.value = d.logradouro || '';
+      if (bairro) bairro.value = d.bairro || '';
+      if (cidade) cidade.value = d.cidade || '';
+      if (estado) estado.value = d.estado || '';
+      setStatus('Endereço preenchido automaticamente.', true);
+      const numero = campo('numero');
+      if (numero) numero.focus();
+    } catch (e) {
+      setStatus(e.message || 'Não foi possível consultar o CEP.');
+    }
+  });
+}
+
+function aplicarEscalaFonte(scale) {
+  scale = Math.min(1.3, Math.max(0.9, Number(scale) || 1));
+  document.documentElement.style.setProperty('--font-scale', scale.toFixed(2));
+  document.documentElement.setAttribute('data-font-scale', String(scale.toFixed(2)));
+  localStorage.setItem('erp_font_scale', String(scale.toFixed(2)));
+
+  // Mantém todos os elementos da interface — inclusive os que possuem
+  // font-size definido em px — sujeitos ao aumento de acessibilidade.
+  document.body.style.zoom = scale.toFixed(2);
+  document.body.style.width = '100%';
+  document.body.style.height = 'auto';
+
+  document.querySelectorAll('.accessibility-tools button').forEach(function(btn) {
+    btn.classList.remove('active');
+  });
+  const active = document.querySelector(
+    '.accessibility-tools button[data-scale="' + scale.toFixed(2) + '"]'
+  );
+  if (active) active.classList.add('active');
+}
+
+function ajustarFonte(delta) {
+  let scale = parseFloat(localStorage.getItem('erp_font_scale') || '1');
+  scale = delta === 0 ? 1 : Math.min(1.3, Math.max(0.9, scale + delta));
+  aplicarEscalaFonte(scale);
+}
+
+(function(){
+  const scale = parseFloat(localStorage.getItem('erp_font_scale') || '1');
+  document.addEventListener('DOMContentLoaded', function () {
+    aplicarEscalaFonte(scale);
+  });
+})();
+
 // ── INICIALIZAÇÃO ────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -178,32 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Máscara CEP: 00000-000 + autopreenchimento via ViaCEP
-  const cepInput = document.getElementById('cep');
-  if (cepInput) {
-    cepInput.addEventListener('input', function () {
-      let v = this.value.replace(/\D/g, '').slice(0, 8);
-      v = v.replace(/^(\d{5})(\d)/, '$1-$2');
-      this.value = v;
-    });
-
-    cepInput.addEventListener('blur', function () {
-      const cep = this.value.replace(/\D/g, '');
-      if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-          .then(r => r.json())
-          .then(d => {
-            if (!d.erro) {
-              document.querySelector('[name="endereco"]').value = d.logradouro;
-              document.querySelector('[name="bairro"]').value   = d.bairro;
-              document.querySelector('[name="cidade"]').value   = d.localidade;
-              document.querySelector('[name="estado"]').value   = d.uf;
-            }
-          })
-          .catch(() => {});
-      }
-    });
-  }
+  // Máscara CEP + consulta pela API interna V03.
+  configurarBuscaCep({
+    cep: 'cep', endereco: 'endereco', bairro: 'bairro', cidade: 'cidade', estado: 'estado'
+  });
 
   // Máscara Celular: (00) 00000-0000
   const celInput = document.getElementById('celular');

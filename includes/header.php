@@ -33,7 +33,8 @@ if ($ehLocal) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema LGPD</title>
     <link rel="icon" type="image/x-icon" href="<?= htmlspecialchars($assetBase, ENT_QUOTES, 'UTF-8') ?>/favicon.ico">
-    <link rel="stylesheet" href="<?= htmlspecialchars($assetBase, ENT_QUOTES, 'UTF-8') ?>/assets/css/estilo.css">
+    <link rel="stylesheet" href="<?= htmlspecialchars($assetBase, ENT_QUOTES, 'UTF-8') ?>/assets/css/estilo.css?v=20261003_03">
 </head>
 <body>
+<script>window.SITE_BASE_URL = <?= json_encode($baseUrl) ?>;</script>
 <button class="mobile-menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" onclick="document.body.classList.toggle('menu-aberto'); this.setAttribute('aria-expanded', document.body.classList.contains('menu-aberto'))">☰</button>

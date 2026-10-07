@@ -8,7 +8,7 @@ function redirecionarEstoque($m = '', $tipo = 'sucesso', $aba = 'visao') {
         $_SESSION['estoque_mensagem'] = $m;
         $_SESSION['estoque_mensagem_tipo'] = $tipo;
     }
-    header('Location: ../gestao_estoque.php?aba=' . urlencode($aba));
+    header('Location: ../gestao_loja.php?aba=' . urlencode($aba));
     exit;
 }
 function num($v) { return (float) str_replace(',', '.', (string)($v ?? 0)); }
@@ -35,34 +35,26 @@ function fornecedorAtivo(PDO $pdo, int $id): bool {
     $s=$pdo->prepare("SELECT COUNT(*) FROM fornecedores WHERE id=? AND status='ATIVO'"); $s->execute([$id]);
     return (int)$s->fetchColumn() > 0;
 }
-function fornecedorProdutoAtivo(PDO $pdo, int $id): bool {
-    if ($id <= 0) return false;
-    $s=$pdo->prepare("SELECT COUNT(*) FROM fornecedores_produtos WHERE id=? AND status='ATIVO'"); $s->execute([$id]);
-    return (int)$s->fetchColumn() > 0;
-}
+function fornecedorProdutoAtivo(PDO $pdo, int $id): bool { return fornecedorAtivo($pdo,$id); }
 function obterOuCriarFornecedorProduto(PDO $pdo, string $selecionado, string $novoNome): int {
-    if ($selecionado === 'NOVO') {
-        $nome=trim($novoNome);
-        if ($nome==='') throw new Exception('Informe o nome do novo fornecedor do produto.');
-        $s=$pdo->prepare("SELECT id FROM fornecedores_produtos WHERE nome=? LIMIT 1"); $s->execute([$nome]); $id=$s->fetchColumn();
-        if ($id) {
-            $pdo->prepare("UPDATE fornecedores_produtos SET status='ATIVO' WHERE id=?")->execute([(int)$id]);
-            return (int)$id;
-        }
-        $s=$pdo->prepare("INSERT INTO fornecedores_produtos(nome,status) VALUES(?, 'ATIVO')"); $s->execute([$nome]);
-        return (int)$pdo->lastInsertId();
-    }
     $id=(int)$selecionado;
-    if (!fornecedorProdutoAtivo($pdo,$id)) throw new Exception('O fornecedor do produto selecionado está inativo ou não existe.');
+    if ($id<=0 || !fornecedorAtivo($pdo,$id)) throw new Exception('Selecione um fornecedor ativo no cadastro único de fornecedores.');
     return $id;
 }
 
 $acao=$_POST['acao']??'';
 try {
+    if ($acao==='atualizar_minimo_ml') {
+        $id=(int)($_POST['produto_id']??0); $min=num($_POST['estoque_minimo_mercado_livre']??0);
+        if($id<=0||$min<0) redirecionarEstoque('Informe um produto e um estoque mínimo válido.','erro','mercado_livre');
+        $s=$pdo->prepare("UPDATE produtos SET estoque_minimo_mercado_livre=? WHERE id=? AND status<>'INATIVO'");
+        $s->execute([$min,$id]);
+        redirecionarEstoque('Estoque mínimo do Mercado Livre atualizado. As sugestões foram recalculadas.','sucesso','mercado_livre');
+    }
     if ($acao==='salvar_produto' || $acao==='editar_produto') {
         $id=(int)($_POST['produto_id']??0); $codigo=trim($_POST['codigo']??''); $sku=trim($_POST['sku']??''); $nome=trim($_POST['nome']??'');
         $unidade='UN'; $minLocal=num($_POST['estoque_minimo_local']??0); $minML=num($_POST['estoque_minimo_mercado_livre']??0);
-        $fornecedorSelecionado=(string)($_POST['fornecedor_produto_id']??''); $novoFornecedor=trim($_POST['novo_fornecedor_produto']??''); $precoCusto=num($_POST['preco_custo']??0); $precoVenda=num($_POST['preco_venda']??0); $descricao=trim($_POST['descricao']??'');
+        $fornecedorSelecionado=(string)($_POST['fornecedor_id'] ?? ''); $novoFornecedor=''; $precoCusto=num($_POST['preco_custo']??0); $precoVenda=num($_POST['preco_venda']??0); $descricao=trim($_POST['descricao']??'');
         if(!$codigo||!$nome) redirecionarEstoque('Código e nome são obrigatórios.','erro','produtos');
         if($minLocal<0||$minML<0||$precoCusto<0||$precoVenda<0) redirecionarEstoque('Informe valores válidos.','erro','produtos');
         if($fornecedorSelecionado==='') redirecionarEstoque('Selecione o fornecedor do produto.','erro','produtos');
@@ -76,10 +68,10 @@ try {
             $sd=$pdo->prepare($sqlDup); $sd->execute($paramsDup);
             if($sd->fetch()) throw new Exception('Já existe um produto ativo com este SKU.');
         }
-        $fornecedorProdutoId=obterOuCriarFornecedorProduto($pdo,$fornecedorSelecionado,$novoFornecedor);
+        $fornecedorId=obterOuCriarFornecedorProduto($pdo,$fornecedorSelecionado,$novoFornecedor);
         if($acao==='salvar_produto') {
-            $s=$pdo->prepare("INSERT INTO produtos (codigo,sku,nome,descricao,unidade_medida,preco_custo,preco_venda,estoque_minimo,estoque_minimo_local,estoque_minimo_mercado_livre,fornecedor_id,fornecedor_produto_id,status) VALUES (?,?,?,?,?,?,?,?,?,?,NULL,?,'ATIVO')");
-            $s->execute([$codigo,$sku?:null,$nome,$descricao?:null,$unidade,$precoCusto,$precoVenda,$minLocal,$minLocal,$minML,$fornecedorProdutoId]);
+            $s=$pdo->prepare("INSERT INTO produtos (codigo,sku,nome,descricao,unidade_medida,preco_custo,preco_venda,estoque_minimo,estoque_minimo_local,estoque_minimo_mercado_livre,fornecedor_id,fornecedor_produto_id,status) VALUES (?,?,?,?,?,?,?,?,?,?,?,NULL,'ATIVO')");
+            $s->execute([$codigo,$sku?:null,$nome,$descricao?:null,$unidade,$precoCusto,$precoVenda,$minLocal,$minLocal,$minML,$fornecedorId]);
             $id=(int)$pdo->lastInsertId();
             foreach(['FISICO','MERCADO_LIVRE'] as $loc) $pdo->prepare("INSERT INTO estoque(produto_id,local_estoque,quantidade,quantidade_reservada) VALUES(?,?,0,0)")->execute([$id,$loc]);
             $qLocal=num($_POST['estoque_local_inicial']??0); $qML=num($_POST['estoque_ml_inicial']??0);
@@ -88,8 +80,8 @@ try {
             $pdo->commit(); redirecionarEstoque('Produto cadastrado.','sucesso','produtos');
         }
         $s=$pdo->prepare("SELECT * FROM produtos WHERE id=? FOR UPDATE"); $s->execute([$id]); if(!$s->fetch()) throw new Exception('Produto não encontrado.');
-        $s=$pdo->prepare("UPDATE produtos SET codigo=?,sku=?,nome=?,descricao=?,unidade_medida=?,preco_custo=?,preco_venda=?,estoque_minimo=?,estoque_minimo_local=?,estoque_minimo_mercado_livre=?,fornecedor_id=NULL,fornecedor_produto_id=? WHERE id=?");
-        $s->execute([$codigo,$sku?:null,$nome,$descricao?:null,$unidade,$precoCusto,$precoVenda,$minLocal,$minLocal,$minML,$fornecedorProdutoId,$id]);
+        $s=$pdo->prepare("UPDATE produtos SET codigo=?,sku=?,nome=?,descricao=?,unidade_medida=?,preco_custo=?,preco_venda=?,estoque_minimo=?,estoque_minimo_local=?,estoque_minimo_mercado_livre=?,fornecedor_id=?,fornecedor_produto_id=NULL WHERE id=?");
+        $s->execute([$codigo,$sku?:null,$nome,$descricao?:null,$unidade,$precoCusto,$precoVenda,$minLocal,$minLocal,$minML,$fornecedorId,$id]);
         $pdo->commit(); redirecionarEstoque('Produto atualizado.','sucesso','produtos');
     }
 
@@ -126,14 +118,14 @@ try {
     }
 
     if ($acao==='salvar_compra' || $acao==='editar_compra') {
-        $id=(int)($_POST['compra_id']??0); $fornProduto=(int)($_POST['fornecedor_produto_id']??0); $prod=(int)($_POST['produto_id']??0); $data=$_POST['data_compra']??date('Y-m-d'); $q=num($_POST['quantidade']??0); $preco=num($_POST['preco_unitario']??0); $numero=trim($_POST['numero']??'');
-        if(!$fornProduto||!fornecedorProdutoAtivo($pdo,$fornProduto)||!$prod||$q<=0||$preco<0) redirecionarEstoque('Preencha fornecedor do produto, produto, quantidade e valor corretamente.','erro','compras');
-        $sp=$pdo->prepare("SELECT id FROM produtos WHERE id=? AND status='ATIVO' AND fornecedor_produto_id=?"); $sp->execute([$prod,$fornProduto]);
+        $id=(int)($_POST['compra_id']??0); $fornProduto=(int)($_POST['fornecedor_id']??0); $prod=(int)($_POST['produto_id']??0); $data=$_POST['data_compra']??date('Y-m-d'); $q=num($_POST['quantidade']??0); $preco=num($_POST['preco_unitario']??0); $numero=trim($_POST['numero']??'');
+        if(!$fornProduto||!fornecedorAtivo($pdo,$fornProduto)||!$prod||$q<=0||$preco<0) redirecionarEstoque('Preencha fornecedor, produto, quantidade e valor corretamente.','erro','compras');
+        $sp=$pdo->prepare("SELECT id FROM produtos WHERE id=? AND status='ATIVO' AND fornecedor_id=?"); $sp->execute([$prod,$fornProduto]);
         if(!$sp->fetchColumn()) redirecionarEstoque('O produto selecionado não pertence ao fornecedor informado.','erro','compras');
         $pdo->beginTransaction();
         if($acao==='salvar_compra') {
-            $s=$pdo->prepare("INSERT INTO compras(numero,fornecedor_id,fornecedor_produto_id,data_compra,status,tipo,valor_frete,desconto,observacoes,usuario_id) VALUES(:numero,NULL,:fornecedor_produto,:data_compra,'CONCLUIDA','PRODUTO',0,0,NULL,:usuario)");
-            $s->execute([':numero'=>($numero!==''?$numero:null),':fornecedor_produto'=>$fornProduto,':data_compra'=>$data,':usuario'=>uid()]);
+            $s=$pdo->prepare("INSERT INTO compras(numero,fornecedor_id,fornecedor_produto_id,data_compra,status,tipo,valor_frete,desconto,observacoes,usuario_id) VALUES(?,?,NULL,?,'RECEBIDA','PRODUTO',0,0,NULL,?)");
+            $s->execute([$numero!==''?$numero:null,$fornProduto,$data,uid()]);
             $id=(int)$pdo->lastInsertId();
             $s=$pdo->prepare("INSERT INTO compra_itens(compra_id,tipo_item,produto_id,suprimento_id,quantidade,quantidade_recebida,preco_unitario,desconto) VALUES(:compra,'PRODUTO',:produto,NULL,:quantidade,:recebida,:preco,0)");
             $s->execute([':compra'=>$id,':produto'=>$prod,':quantidade'=>$q,':recebida'=>$q,':preco'=>$preco]);
@@ -141,9 +133,9 @@ try {
             $pdo->prepare("UPDATE produtos SET preco_custo=? WHERE id=?")->execute([$preco,$prod]);
             $pdo->commit(); redirecionarEstoque('Compra registrada e estoque atualizado.','sucesso','compras');
         }
-        $s=$pdo->prepare("SELECT c.id,c.fornecedor_id,c.fornecedor_produto_id,c.data_compra,c.numero,ci.id item_id,ci.produto_id,ci.quantidade,ci.preco_unitario FROM compras c JOIN compra_itens ci ON ci.compra_id=c.id AND ci.tipo_item='PRODUTO' WHERE c.id=? FOR UPDATE");$s->execute([$id]);$old=$s->fetch();if(!$old)throw new Exception('Compra não encontrada.');
+        $s=$pdo->prepare("SELECT c.id,c.fornecedor_id,c.data_compra,c.numero,ci.id item_id,ci.produto_id,ci.quantidade,ci.preco_unitario FROM compras c JOIN compra_itens ci ON ci.compra_id=c.id AND ci.tipo_item='PRODUTO' WHERE c.id=? FOR UPDATE");$s->execute([$id]);$old=$s->fetch();if(!$old)throw new Exception('Compra não encontrada.');
         alterarEstoque($pdo,(int)$old['produto_id'],'FISICO',-(float)$old['quantidade'],'AJUSTE_SAIDA','Estorno da compra para edição','COMPRA_EDICAO',$id);
-        $pdo->prepare("UPDATE compras SET fornecedor_id=NULL,fornecedor_produto_id=?,data_compra=?,numero=? WHERE id=?")->execute([$fornProduto,$data,$numero?:null,$id]);
+        $pdo->prepare("UPDATE compras SET fornecedor_id=?,fornecedor_produto_id=NULL,data_compra=?,numero=? WHERE id=?")->execute([$fornProduto,$data,$numero?:null,$id]);
         $pdo->prepare("UPDATE compra_itens SET produto_id=?,quantidade=?,quantidade_recebida=?,preco_unitario=? WHERE id=?")->execute([$prod,$q,$q,$preco,$old['item_id']]);
         alterarEstoque($pdo,$prod,'FISICO',$q,'ENTRADA_COMPRA','Compra editada','COMPRA',$id);
         $pdo->prepare("UPDATE produtos SET preco_custo=? WHERE id=?")->execute([$preco,$prod]); $pdo->commit(); redirecionarEstoque('Compra alterada e estoque recalculado.','sucesso','compras');
@@ -237,8 +229,35 @@ try {
         $pdo->commit(); redirecionarEstoque('Transferência excluída e estoque ajustado.','sucesso','mercado_livre');
     }
 
+    if ($acao==='atualizar_minimo_material') {
+        $id=(int)($_POST['material_id']??0);$min=num($_POST['estoque_minimo']??0);
+        if(!$id||$min<0) redirecionarEstoque('Informe um estoque mínimo válido.','erro','materiais_uso');
+        $s=$pdo->prepare("UPDATE suprimentos SET estoque_minimo=? WHERE id=? AND status='ATIVO'");$s->execute([$min,$id]);
+        if($s->rowCount()<1){$chk=$pdo->prepare("SELECT id FROM suprimentos WHERE id=?");$chk->execute([$id]);if(!$chk->fetch())throw new Exception('Material de uso não encontrado.');}
+        redirecionarEstoque('Estoque mínimo do Material de Uso atualizado.','sucesso','materiais_uso');
+    }
+
+    if ($acao==='ajustar_inventario_material') {
+        $id=(int)($_POST['material_id']??0);$real=num($_POST['quantidade_real']??-1);$motivo=trim($_POST['motivo']??'Inventário de Material de Uso');
+        if(!$id||$real<0) redirecionarEstoque('Informe os dados do inventário do material corretamente.','erro','inventario');
+        $pdo->beginTransaction();
+        $s=$pdo->prepare("SELECT estoque_atual FROM suprimentos WHERE id=? AND status='ATIVO' FOR UPDATE");$s->execute([$id]);$antes=$s->fetchColumn();if($antes===false)throw new Exception('Material de uso não encontrado ou inativo.');$antes=(float)$antes;$delta=$real-$antes;
+        if(abs($delta)>0.000001){$pdo->prepare('UPDATE suprimentos SET estoque_atual=? WHERE id=?')->execute([$real,$id]);$pdo->prepare('INSERT INTO movimentacoes_suprimentos(suprimento_id,tipo,quantidade,estoque_anterior,estoque_posterior,motivo,usuario_id) VALUES(?,?,?,?,?,?,?)')->execute([$id,$delta>0?'AJUSTE_ENTRADA':'AJUSTE_SAIDA',abs($delta),$antes,$real,$motivo?:'Inventário de Material de Uso',uid()]);}
+        $pdo->commit();redirecionarEstoque('Inventário do Material de Uso conferido e registrado.','sucesso','inventario');
+    }
+
     if ($acao==='ajustar_inventario') {
         $id=(int)$_POST['produto_id'];$local=$_POST['local_estoque']??'FISICO';$real=num($_POST['quantidade_real']);$motivo=trim($_POST['motivo']??'Inventário físico');if(!$id||!in_array($local,['FISICO','MERCADO_LIVRE'],true)||$real<0)redirecionarEstoque('Informe os dados do inventário corretamente.','erro','inventario');$pdo->beginTransaction();$antes=estoque($pdo,$id,$local,true);$delta=$real-$antes;if(abs($delta)>0.000001)alterarEstoque($pdo,$id,$local,$delta,$delta>0?'AJUSTE_ENTRADA':'AJUSTE_SAIDA',$motivo,'INVENTARIO',$id);$pdo->commit();redirecionarEstoque('Inventário conferido e registrado.','sucesso','inventario');
     }
-} catch(Throwable $e) { if($pdo->inTransaction())$pdo->rollBack(); redirecionarEstoque($e->getMessage(),'erro',in_array($acao,['salvar_compra','editar_compra','excluir_compra'])?'compras':(in_array($acao,['salvar_venda','editar_venda','excluir_venda'])?'vendas':(strpos($acao,'devolucao')!==false?'devolucoes':(strpos($acao,'transferencia')!==false || $acao==='enviar_mercado_livre'?'mercado_livre':'produtos')))); }
+} catch(Throwable $e) {
+    if($pdo->inTransaction())$pdo->rollBack();
+    $abaErro='produtos';
+    if(in_array($acao,['salvar_compra','editar_compra','excluir_compra'],true)) $abaErro='compras';
+    elseif(in_array($acao,['salvar_venda','editar_venda','excluir_venda'],true)) $abaErro='vendas';
+    elseif($acao==='atualizar_minimo_material') $abaErro='materiais_uso';
+    elseif(in_array($acao,['ajustar_inventario_material','ajustar_inventario'],true)) $abaErro='inventario';
+    elseif(strpos($acao,'devolucao')!==false) $abaErro='devolucoes';
+    elseif(strpos($acao,'transferencia')!==false || $acao==='enviar_mercado_livre') $abaErro='mercado_livre';
+    redirecionarEstoque($e->getMessage(),'erro',$abaErro);
+}
 redirecionarEstoque();

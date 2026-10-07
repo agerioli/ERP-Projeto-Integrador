@@ -1,0 +1,19 @@
+V03 - AJUSTES FINAIS SOBRE A VERSAO UX CORRIGIDA
+
+Base utilizada: ERP_Gestao_LGPD_V03_GESTAO_LOJA_UX_CORRIGIDA(1).zip fornecido pelo usuario.
+
+Ajustes desta entrega:
+1. Materiais de Uso: removido o botao duplicado "Registrar uso" do topo.
+2. Materiais de Uso: acao da tabela alterada para "Registrar Uso".
+3. Materiais de Uso: texto explicativo informa que a aba serve para ajustar estoque minimo, registrar uso e acompanhar consumo.
+4. Uso de Materiais: corrigido erro no controller causado por variavel de usuario incorreta ($$usuarioId).
+5. Uso de Materiais: mensagens passam a retornar corretamente para a Gestao da Loja.
+6. Historico da Gestao da Loja: passa a consolidar movimentacoes de produtos e materiais de uso, incluindo CONSUMO, ESTORNO_CONSUMO e CONSUMO_EDICAO.
+7. Historico: itens de material aparecem como "Material de Uso" no local e o campo de item passa a ser generico.
+8. Visao Geral: dashboard executivo redesenhado com mais espacamento, cores, icones, KPIs, estoque/custos, ocorrencias, prioridades e leitura para decisao.
+9. A estrutura anterior da versao base foi preservada; nao foi criado novo SQL para estes ajustes.
+
+Instalacao:
+- Substitua os arquivos da pasta Site pelos arquivos desta versao.
+- Faça Ctrl+F5 no navegador.
+- Nao e necessario executar SQL adicional para estes ajustes.

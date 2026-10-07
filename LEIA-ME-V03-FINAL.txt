@@ -1,0 +1,76 @@
+ERP Gestão LGPD — V03 FINAL PARA TESTE LOCAL (XAMPP)
+=====================================================
+
+Base: evolução incremental da V02/V03 corrigida.
+Objetivo: simplificar a operação para a usuária e concentrar estoque/suprimentos em uma visão única da loja.
+
+NOVA ORDEM DO MENU
+------------------
+1. Início
+2. Clientes
+3. Fornecedores
+4. Compras
+5. Vendas
+6. Gestão da Loja
+7. Gestão LGPD
+8. Guia LGPD
+9. Sair
+
+PRINCIPAIS MUDANÇAS
+-------------------
+- Cadastro único de fornecedores.
+- CNPJ, CEP, endereço e classificação do fornecedor.
+- API de CEP reaproveitada em clientes e fornecedores.
+- Cadastro de itens com somente dois tipos na interface: Produto para Venda e Material de Uso.
+- "Material Interno" passa a ser apresentado como "Material de Uso".
+- Nova tela Compras: registra produtos/materiais e atualiza o estoque.
+- Nova tela Vendas: registra vendas e baixa o estoque.
+- Gestão da Loja substitui a navegação separada de Gestão de Estoque/Gestão de Suprimentos.
+- Gestão da Loja concentra ações: comprar, transferir para Mercado Livre, estoque baixo, custos e devoluções.
+- Correção da rolagem vertical das telas.
+- Controle A-/A/A+ revisado.
+
+INSTALAÇÃO
+----------
+1. Faça backup da pasta atual C:\xampp\htdocs\Site.
+2. Extraia o conteúdo deste ZIP em C:\xampp\htdocs\Site.
+3. Abra o phpMyAdmin.
+4. Selecione o MESMO banco utilizado pela V02/V03.
+5. Execute APENAS:
+   database/MIGRACAO_V03_FINAL.sql
+6. Não execute ERP_DEFINITIVO_RESET.sql.
+7. Acesse http://localhost/Site/
+
+IMPORTANTE
+----------
+A migração é incremental. Não remove tabelas históricas nem apaga dados.
+As estruturas legadas de fornecedores de produtos permanecem para compatibilidade.
+
+ROTEIRO DE TESTE
+----------------
+1. Login -> deve abrir em Início.
+2. Clientes -> Cadastro -> consultar CEP.
+3. Fornecedores -> cadastrar fornecedor com CNPJ e CEP.
+4. Cadastro de Itens -> testar Produto para Venda e Material de Uso.
+5. Compras -> registrar uma compra de produto e conferir entrada no estoque.
+6. Compras -> registrar uma compra de Material de Uso e conferir estoque interno.
+7. Vendas -> registrar venda local e conferir baixa.
+8. Vendas -> registrar venda Mercado Livre e conferir baixa no estoque ML.
+9. Gestão da Loja -> conferir indicadores e ações.
+10. Gestão da Loja -> testar transferência para Mercado Livre.
+11. Gestão da Loja -> testar devolução.
+12. Testar A+ / A / A-.
+13. Em todas as telas, verificar se é possível rolar até o final.
+
+OBSERVAÇÃO
+----------
+A Gestão de Suprimentos deixa de aparecer no menu como tela independente.
+Suas funções de materiais de uso passam a ser tratadas pelo Cadastro de Itens,
+Compras e Gestão da Loja.
+
+AJUSTE COMPLEMENTAR — FORNECEDORES E COMPRAS
+- Fornecedores: campo "Fornece" passou a ser uma lista, com Produto de Venda, Material de Uso ou ambos.
+- Compras: valor unitário fica vazio em novos registros e não é preenchido automaticamente ao selecionar o item.
+- Compras: incluído botão Editar.
+- Edição de compra recalcula a movimentação do estoque, atualiza fornecedor, item, quantidade, preço, data e referência, além de recalcular o custo atual do produto e os vínculos de fornecedor.
+- Rolagem: a V03 passa a utilizar a rolagem da página inteira em telas desktop, evitando que o conteúdo fique preso em uma área interna.
