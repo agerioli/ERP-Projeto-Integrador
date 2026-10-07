@@ -1,0 +1,10 @@
+# Cópias temporárias de versões
+V02/
+V03/
+
+# Arquivos de backup
+*.bak
+
+# Arquivos de teste
+teste.php
+gestao_suprimentos copy.php
