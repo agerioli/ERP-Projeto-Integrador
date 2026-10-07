@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Dados - Preferências</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container{
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            
+        }
+        h2{
+            color: #333;
+            text-align: center;
+        }
+        .form-group{
+            margin-bottom: 15px;
+        }
+        label{
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select{
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .mensagem {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        .sucesso {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .erro {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Autorização de uso de dados</h2>
+        
+        <div class="form-group">
+            <div style="text-align: left;" display: inline-block; margin-top: 10px;>
+
+            <label>Solicitamos sua autorização para coletar e utilizar seus dados pessoais com a finalidade de melhorar nosso atendimento, processar suas compras e oferecer uma experiência mais personalizada. 
+                Garantimos que suas informações serão tratadas com segurança e não serão compartilhadas com terceiros sem o seu consentimento.</label>
+
+            <select name="autorização">
+                    <option value="">Selecione...</option>
+                    <option value="Sim">Sim, eu autorizo o uso dos meus dados.</option>
+                    <option value="Não">Não, eu não autorizo.</option>
+                </select>
+            </div>
+        
+        
+        
+        <h2>Cadastro</h2>
+        
+        <div id="mensagem" class="mensagem"></div>
+        
+        <form id="formInserir" method="POST" action="processar_inserir.php">
+            <div class="form-group">
+                <label>CPF *</label>
+                <input type="text" name="cpf" id="cpf" required placeholder="000.000.000-00" maxlength="14">
+            </div>
+            
+            <div class="form-group">
+                <label>Nome Completo *</label>
+                <input type="text" name="nome_completo" id="nome_completo" required placeholder="Nome e Sobrenome">
+            </div>
+
+            <div class="form-group">
+                <label>Sexo *</label>
+                <select name="sexo" required>
+                    <option value="">Selecione...</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                </select>
+            </div>
+            
+            
+            <div class="form-group">
+                <label>Data de Nascimento *</label>
+                <input type="date" name="data_de_nascimento" required>
+            </div>
+
+            <div class="form-group">
+                <label>CEP *</label>
+                <input type="text" name="cep" id="cep" maxlength="11" required placeholder="00000-000">
+            </div>
+
+            <div class="form-group">
+                <label>Endereço *</label>
+                <input type="text" name="endereco" placeholder="Rua, Número..." required>
+            </div>
+
+            <div class="form-group">
+                <label>Bairro *</label>
+                <input type="text" name="bairro" placeholder="Bairro..." required>
+            </div>
+
+            <div class="form-group">
+                <label>Cidade *</label>
+                <input type="text" name="cidade" placeholder="Cidade..." required>
+            </div>
+
+            <div class="form-group">
+                <label>Estado *</label>
+                <select name="estado" required>
+                    <option value="">Selecione...</option>
+                    <option value="Acre">Acre</option>
+                    <option value="Alagoas">Alagoas</option>
+                    <option value="Amapá">Amapá</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Bahia">Bahia</option>
+                    <option value="Ceará">Ceará</option>
+                    <option value="Espírito Santo">Espírito Santo</option>
+                    <option value="Goiás">Goiás</option>
+                    <option value="Maranhão">Maranhão</option>
+                    <option value="Mato Grosso">Mato Grosso</option>
+                    <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                    <option value="Minas Gerais">Minas Gerais</option>
+                    <option value="Pará">Pará</option>
+                    <option value="Paraíba">Paraíba</option>
+                    <option value="Paraná">Paraná</option>
+                    <option value="Pernanbuco">Pernanbuco</option>
+                    <option value="Piauí">Piauí</option>
+                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                    <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                    <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                    <option value="Rondônia">Rondônia</option>
+                    <option value="Roraima">Roraima</option>
+                    <option value="Santa Catarina">Santa Catarina</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Sergipe">Sergipe</option>
+                    <option value="Tocantins">Tocantins</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail *</label>
+                <input type="email" placeholder="E-mail" required>
+            </div>
+
+            <div class="form-group">
+                <label>Celular / Whatsapp *</label>
+                <input type="text" name="celular" id="celular" maxlength="11" required placeholder="(00)00000-0000" >
+            </div>
+
+
+            <h2>Preferências</h2>
+            
+            
+            
+            <div class="form-group">
+                <label>Forma de Pagamento Preferida</label>
+                <select name="forma_pagamento">
+                    <option value="">Selecione...</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                    <option value="PIX">PIX</option>
+                    <option value="Boleto">Boleto</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Cor Preferida</label>
+                <input type="text" name="cor_preferida" placeholder="Ex: Azul, Vermelho, Preto">
+            </div>
+            
+            <div class="form-group">
+                <label>Tecido Preferido</label>
+                <select name="tecido_preferido">
+                    <option value="">Selecione...</option>
+                    <option value="Algodão">Algodão</option>
+                    <option value="Poliéster">Poliéster</option>
+                    <option value="Linho">Linho</option>
+                    <option value="Seda">Seda</option>
+                    <option value="Viscose">Viscose</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tamanho de Camiseta</label>
+                <select name="tamanho_camiseta">
+                    <option value="">Selecione...</option>
+                    <option value="PP">PP</option>
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                    <option value="XG">XG</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tamanho de Calça</label>
+                <select name="tamanho_calca">
+                    <option value="">Selecione...</option>
+                    <option value="34">34</option>
+                    <option value="36">36</option>
+                    <option value="38">38</option>
+                    <option value="40">40</option>
+                    <option value="42">42</option>
+                    <option value="44">44</option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tamanho de Sapato</label>
+                <select name="tamanho_sapato">
+                    <option value="">Selecione...</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                </select>
+            </div>
+            
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <script>
+        // Máscara para CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})/, '$1-$2');
+                e.target.value = value;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clientes</title>
+
+
+
+  <!-- fonte -->
+
+  <link
+
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+
+    rel="stylesheet" />
+
+
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+
+
+<body>
+
+
+
+  <!-- SIDEBAR -->
+
+  <div class="sidebar">
+
+    <div class="sb-header">
+
+      <div class="sb-logo">Dados dos clientes</div>
+
+      <div class="sb-sub">NOME DA LOJA</div>
+
+    </div>
+
+
+
+    <div class="guia-btn" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+
+        <circle cx="7" cy="7" r="5.5" stroke="#fff" stroke-width="1.3" />
+
+        <path d="M7 6.5v4M7 4.5v1" stroke="#fff" stroke-width="1.5" />
+
+      </svg>
+
+      <span>Início</span>
+
+    </div>
+
+    <div class="nav-sep"></div>
+
+
+
+    <div class="nav-item" id="nav-guia" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="2" y="1" width="11" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M5 5h5M5 8h5M5 11h3" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      📚 Guia LGPD
+
+    </div>
+
+    <div class="nav-item" id="nav-painel" onclick="location.href='index.html'">
+
+      <svg width=" 15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor" />
+
+        <rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+        <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+        <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+      </svg>
+
+      Painel geral
+
+    </div>
+
+    <div class="nav-item active" id="nav-clientes" onclick="location.href='clientes.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <circle cx="7.5" cy="5.5" r="2.8" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M2 14c0-3 2.5-5.5 5.5-5.5S13 11 13 14" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      Clientes
+
+    </div>
+
+    <div class="nav-item" id="nav-consentimentos" onclick="location.href='consentimentos.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="2" y="2" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M5 7.5l2.5 2.5 4-4" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      Consentimentos
+
+    </div>
+
+    <div class="nav-item" id="nav-conformidade" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <path d="M7.5 1.5L13 4.5v5c0 3-2.5 4.5-5.5 5C5 14 2 12.5 2 9.5v-5L7.5 1.5z" stroke="currentColor"
+
+          stroke-width="1.3" />
+
+        <path d="M5 7.5l2 2.5 3.5-4" stroke="currentColor" stroke-width="1.5" />
+
+      </svg>
+
+      Minha conformidade
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MAIN -->
+
+  <div class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <div class="topbar-title" id="tb-title">Clientes</div>
+
+        <div class="topbar-sub" id="tb-sub">Cadastro e gestão de clientes</div>
+
+      </div>
+
+      <div id="tb-actions"></div>
+
+    </div>
+
+
+
+    <div class="content">
+
+      <div class="screen active" id="screen-clientes">
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+
+          <div>
+
+            <div style="font-size:13px;font-weight:600;color:var(--g900)">38 clientes cadastrados</div>
+
+            <div style="font-size:11px;color:var(--g500);margin-top:2px">Último cadastro: 18 mar 2025</div>
+
+          </div>
+
+          <button class="btn btn-pri" onclick="toggleForm()">+ Novo cliente</button>
+
+        </div>
+
+        <div id="lista-clientes" class="card mb12">
+
+          <div class="tbl-row tbl-hdr" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <span>Nome</span><span>Base legal</span><span>Dados</span><span>Status</span><span>Ações</span>
+
+          </div>
+
+          <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <div>
+
+              <div class="cname">Ana Souza</div>
+
+              <div class="csub">jan/25 · aniversário hoje</div>
+
+            </div><span class="tag tag-blue">Consentimento</span><span class="tag tag-purple">Sensível</span><span
+
+              class="tag tag-ok">OK</span><span style="font-size:11px;color:var(--blue);cursor:pointer">editar</span>
+
+          </div>
+
+          <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <div>
+
+              <div class="cname">Carlos Lima</div>
+
+              <div class="csub">fev/25 · inativo 45 dias</div>
+
+            </div><span class="tag tag-blue">Contrato</span><span
+
+              style="font-size:11px;color:var(--g500)">Básico</span><span class="tag tag-ok">OK</span><span
+
+              style="font-size:11px;color:var(--blue);cursor:pointer">editar</span>
+
+          </div>
+
+          <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <div>
+
+              <div class="cname">Beatriz Costa</div>
+
+              <div class="csub">mar/25</div>
+
+            </div><span class="tag tag-blue">Consentimento</span><span class="tag tag-purple">Sensível</span><span
+
+              class="tag tag-pend">Pendente</span><span
+
+              style="font-size:11px;color:var(--blue);cursor:pointer">editar</span>
+
+          </div>
+
+          <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <div>
+
+              <div class="cname">Rodrigo Alves</div>
+
+              <div class="csub">mar/25</div>
+
+            </div><span class="tag tag-blue">Obrig. legal</span><span
+
+              style="font-size:11px;color:var(--g500)">Básico</span><span class="tag tag-ok">OK</span><span
+
+              style="font-size:11px;color:var(--blue);cursor:pointer">editar</span>
+
+          </div>
+
+          <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .9fr .9fr .8fr">
+
+            <div>
+
+              <div class="cname">Fernanda Melo</div>
+
+              <div class="csub">jan/25</div>
+
+            </div><span class="tag tag-blue">Consentimento</span><span
+
+              style="font-size:11px;color:var(--g500)">Básico</span><span class="tag tag-ok">OK</span><span
+
+              style="font-size:11px;color:var(--blue);cursor:pointer">editar</span>
+
+          </div>
+
+        </div>
+
+        <div id="form-cliente" style="display:none">
+
+          <div
+
+            style="font-size:14px;font-weight:600;color:var(--g900);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">
+
+            Novo cadastro<div style="display:flex;gap:8px"><button class="btn btn-sec"
+
+                onclick="toggleForm()">Cancelar</button><button class="btn btn-pri">Salvar cliente</button></div>
+
+          </div>
+
+          <div class="form-section">
+
+            <div class="form-sec-title">Dados básicos</div>
+
+            <div class="form-grid">
+
+              <div class="field full"><label>Nome completo</label><input placeholder="Ex: Maria da Silva" /></div>
+
+              <div class="field"><label>Celular / WhatsApp</label><input placeholder="(11) 99999-0000" /></div>
+
+              <div class="field"><label>Telefone fixo <span class="opt">(opcional)</span></label><input
+
+                  placeholder="(11) 3333-0000" /></div>
+
+              <div class="field"><label>E-mail <span class="opt">(se houver)</span></label><input
+
+                  placeholder="maria@email.com" /></div>
+
+              <div class="field"><label>Dia de aniversário</label><input placeholder="Ex: 14 de março" /></div>
+
+              <div class="field full"><label>Endereço <span class="opt">(opcional)</span></label><input
+
+                  placeholder="Rua, número, bairro, cidade" /></div>
+
+            </div>
+
+          </div>
+
+          <div class="form-section">
+
+            <div class="form-sec-title">Histórico de compras</div>
+
+            <div class="form-grid">
+
+              <div class="field"><label>Data da última compra</label><input placeholder="dd/mm/aaaa" /></div>
+
+              <div class="field"><label>Forma de pagamento preferida</label><select>
+
+                  <option>Selecionar</option>
+
+                  <option>Pix</option>
+
+                  <option>Cartão de crédito</option>
+
+                  <option>Dinheiro</option>
+
+                  <option>Boleto</option>
+
+                </select></div>
+
+            </div>
+
+          </div>
+
+          <div class="form-section">
+
+            <div class="form-sec-title">Preferências da cliente</div>
+
+            <div class="form-grid mb12">
+
+              <div class="field"><label>Cor preferida</label><input placeholder="Ex: azul, rosa, preto..." /></div>
+
+              <div class="field"><label>Tecido preferido</label><select>
+
+                  <option>Selecionar</option>
+
+                  <option>Algodão</option>
+
+                  <option>Poliéster</option>
+
+                  <option>Linho</option>
+
+                  <option>Viscose</option>
+
+                  <option>Malha</option>
+
+                </select></div>
+
+            </div>
+
+            <div class="size-grid mb12">
+
+              <div class="size-item"><label>Camiseta / blusa</label><select>
+
+                  <option>--</option>
+
+                  <option>PP</option>
+
+                  <option>P</option>
+
+                  <option>M</option>
+
+                  <option>G</option>
+
+                  <option>GG</option>
+
+                </select></div>
+
+              <div class="size-item"><label>Calça / saia</label><select>
+
+                  <option>--</option>
+
+                  <option>34</option>
+
+                  <option>36</option>
+
+                  <option>38</option>
+
+                  <option>40</option>
+
+                  <option>42</option>
+
+                  <option>44</option>
+
+                </select></div>
+
+              <div class="size-item"><label>Vestido</label><select>
+
+                  <option>--</option>
+
+                  <option>PP</option>
+
+                  <option>P</option>
+
+                  <option>M</option>
+
+                  <option>G</option>
+
+                  <option>GG</option>
+
+                </select></div>
+
+              <div class="size-item"><label>Calçado</label><select>
+
+                  <option>--</option>
+
+                  <option>34</option>
+
+                  <option>35</option>
+
+                  <option>36</option>
+
+                  <option>37</option>
+
+                  <option>38</option>
+
+                  <option>39</option>
+
+                </select></div>
+
+            </div>
+
+            <div
+
+              style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px">
+
+              Estilo preferido</div>
+
+            <div class="chk-grid">
+
+              <div class="chk-item">
+
+                <div class="chk-box on"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+
+                    <path d="M1.5 4.5l2 2.5 4-4" stroke="#fff" stroke-width="1.4" />
+
+                  </svg></div>Camisa com botão
+
+              </div>
+
+              <div class="chk-item">
+
+                <div class="chk-box"></div>Camisa sem botão
+
+              </div>
+
+              <div class="chk-item">
+
+                <div class="chk-box on"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+
+                    <path d="M1.5 4.5l2 2.5 4-4" stroke="#fff" stroke-width="1.4" />
+
+                  </svg></div>Manga curta
+
+              </div>
+
+              <div class="chk-item">
+
+                <div class="chk-box"></div>Manga longa
+
+              </div>
+
+              <div class="chk-item">
+
+                <div class="chk-box"></div>Gosta de saia
+
+              </div>
+
+              <div class="chk-item">
+
+                <div class="chk-box on"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+
+                    <path d="M1.5 4.5l2 2.5 4-4" stroke="#fff" stroke-width="1.4" />
+
+                  </svg></div>Gosta de bermuda
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-section">
+
+            <div class="form-sec-title">Relacionamentos com outras clientes da loja</div>
+
+            <div class="rel-row"><input placeholder="Nome da cliente relacionada" /><select>
+
+                <option>Tipo de relacionamento</option>
+
+                <option>Amizade</option>
+
+                <option>Vizinha(o)</option>
+
+                <option>Familiar</option>
+
+                <option>Colega de trabalho</option>
+
+              </select><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="cursor:pointer;flex-shrink:0">
+
+                <path d="M12 4L4 12M4 4l8 8" stroke="var(--g400)" stroke-width="1.4" />
+
+              </svg></div><span class="add-link">+ Adicionar relacionamento</span>
+
+        </div> <!-- screen -->
+
+            </div> <!-- screen -->
+
+      </div> <!-- content -->
+
+    </div> <!-- main -->
+
+
+
+  <script src="script.js"></script>
+
+
+
+</body>
+
+</html>

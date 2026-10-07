@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Painel Geral</title>
+
+
+
+  <!-- fonte -->
+
+  <link
+
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+
+    rel="stylesheet" />
+
+
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="css/styles.css">
+
+
+  
+
+ 
+
+</head>
+
+
+
+<body>
+
+
+
+  <!-- SIDEBAR -->
+
+  <div class="sidebar">
+
+    <div class="sb-header">
+
+      <div class="sb-logo">Dados dos clientes</div>
+
+      <div class="sb-sub">NOME DA LOJA</div>
+
+    </div>
+
+
+
+    <div class="guia-btn" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+
+        <circle cx="7" cy="7" r="5.5" stroke="#fff" stroke-width="1.3" />
+
+        <path d="M7 6.5v4M7 4.5v1" stroke="#fff" stroke-width="1.5" />
+
+      </svg>
+
+      <span>Início</span>
+
+    </div>
+
+    <div class="nav-sep"></div>
+
+
+
+    <div class="nav-item" id="nav-guia" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="2" y="1" width="11" height="13" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M5 5h5M5 8h5M5 11h3" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      📚 Guia LGPD
+
+    </div>
+
+    <div class="nav-item active" id="nav-painel" onclick="location.href='painel.html'">
+
+      <svg width=" 15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="1" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor" />
+
+        <rect x="8.5" y="1" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+        <rect x="1" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+        <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.2" fill="currentColor" opacity=".35" />
+
+      </svg>
+
+      Painel geral
+
+    </div>
+
+    <div class="nav-item" id="nav-clientes" onclick="location.href='clientes.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <circle cx="7.5" cy="5.5" r="2.8" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M2 14c0-3 2.5-5.5 5.5-5.5S13 11 13 14" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      Clientes
+
+    </div>
+
+    <div class="nav-item" id="nav-consentimentos" onclick="location.href='consentimentos.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <rect x="2" y="2" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.3" />
+
+        <path d="M5 7.5l2.5 2.5 4-4" stroke="currentColor" stroke-width="1.3" />
+
+      </svg>
+
+      Consentimentos
+
+    </div>
+
+    <div class="nav-item" id="nav-conformidade" onclick="location.href='/guia-lgpd.html'">
+
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+
+        <path d="M7.5 1.5L13 4.5v5c0 3-2.5 4.5-5.5 5C5 14 2 12.5 2 9.5v-5L7.5 1.5z" stroke="currentColor"
+
+          stroke-width="1.3" />
+
+        <path d="M5 7.5l2 2.5 3.5-4" stroke="currentColor" stroke-width="1.5" />
+
+      </svg>
+
+      Minha conformidade
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MAIN -->
+
+  <div class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <div class="topbar-title" id="tb-title">Painel Geral</div>
+
+        <div class="topbar-sub" id="tb-sub">Bem-vinda, USUÁRIO</div>
+
+      </div>
+
+      <div id="tb-actions"></div>
+
+    </div>
+
+
+
+
+
+    <div class="content">
+
+      <div class="screen active" id="screen-painel">
+
+        <div class="alert-strip">
+
+          <div class="alert-pill ap-r"><span class="dot dot-r"></span>Consentimento pendente — Beatriz Costa não
+
+            autorizou o uso dos dados</div>
+
+          <div class="alert-pill ap-a"><span class="dot dot-a"></span>Solicitação de exclusão aguardando resposta —
+
+            prazo: 13 dias</div>
+
+          <div class="alert-pill ap-g"><span class="dot dot-g"></span>Mapa de dados atualizado com sucesso</div>
+
+        </div>
+
+        <div class="metrics-grid">
+
+          <div class="metric-card">
+
+            <div class="metric-label">Clientes cadastrados</div>
+
+            <div class="metric-value">38</div>
+
+            <div class="metric-sub" style="color:var(--green)">+3 este mês</div>
+
+          </div>
+
+          <div class="metric-card">
+
+            <div class="metric-label">Consentimentos ativos</div>
+
+            <div class="metric-value">31</div>
+
+            <div class="metric-sub" style="color:var(--amber)">7 pendentes</div>
+
+          </div>
+
+          <div class="metric-card">
+
+            <div class="metric-label">Solicitações abertas</div>
+
+            <div class="metric-value">2</div>
+
+            <div class="metric-sub" style="color:var(--red)">prazo mais curto: 13 dias</div>
+
+          </div>
+
+          <div class="metric-card">
+
+            <div class="metric-label">Conformidade geral</div>
+
+            <div class="metric-value">74%</div>
+
+            <div class="metric-sub" style="color:var(--amber)">em progresso</div>
+
+          </div>
+
+        </div>
+
+        <div class="sec-title">Saiba mais sobre LGPD</div>
+
+        <div class="three-col mb20">
+
+          <div class="news-card" onclick="go('guia')">
+
+            <div class="news-img ni-b"><svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+
+                <rect x="7" y="5" width="22" height="28" rx="3" fill="#B5D4F4" />
+
+                <path d="M12 14h12M12 19h12M12 24h8" stroke="#185FA5" stroke-width="1.5" />
+
+                <circle cx="31" cy="31" r="7" fill="#185FA5" />
+
+                <path d="M28 31h6M31 28v6" stroke="#fff" stroke-width="1.5" />
+
+              </svg></div>
+
+            <div class="news-body">
+
+              <div class="news-q">Posso guardar o CPF do cliente?</div>
+
+              <div class="news-a">É possível, mas jamais divulgá-lo sem autorização do cliente.</div>
+
+            </div>
+
+          </div>
+
+          <div class="news-card" onclick="go('guia')">
+
+            <div class="news-img ni-g"><svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+
+                <circle cx="20" cy="20" r="13" fill="#C0DD97" />
+
+                <path d="M13 20l6 6 10-10" stroke="#3B6D11" stroke-width="2" />
+
+              </svg></div>
+
+            <div class="news-body">
+
+              <div class="news-q">Preciso de autorização para enviar promoções?</div>
+
+              <div class="news-a">Sim. A autorização do cliente está sempre acima de tudo!</div>
+
+            </div>
+
+          </div>
+
+          <div class="news-card" onclick="go('guia')">
+
+            <div class="news-img ni-a"><svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+
+                <path d="M20 6L35 32H5L20 6z" fill="#FAC775" />
+
+                <path d="M20 17v9M20 28.5v2" stroke="#854F0B" stroke-width="2" />
+
+              </svg></div>
+
+            <div class="news-body">
+
+              <div class="news-q">Como guardar dados com segurança?</div>
+
+              <div class="news-a">Tenha cuidado ao manter cadastros em plataformas gratuitas.</div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="two-col">
+
+          <div>
+
+            <div class="sec-title">Lembretes inteligentes</div>
+
+            <div class="card">
+
+              <div class="rem-row">
+
+                <div class="rem-icon ri-g"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+
+                    <circle cx="7" cy="7" r="5.5" stroke="#3B6D11" stroke-width="1.2" />
+
+                    <path d="M7 4v3l2 1.5" stroke="#3B6D11" stroke-width="1.2" />
+
+                  </svg></div>
+
+                <div>
+
+                  <div class="rem-text">Aniversário de <strong>Ana Souza</strong> hoje</div>
+
+                  <div class="rem-sub">Considere enviar uma mensagem especial</div>
+
+                </div>
+
+              </div>
+
+              <div class="rem-row">
+
+                <div class="rem-icon ri-b"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+
+                    <rect x="1" y="3" width="12" height="9" rx="1.5" stroke="#185FA5" stroke-width="1.2" />
+
+                    <path d="M4 1v3M10 1v3M1 6.5h12" stroke="#185FA5" stroke-width="1.2" />
+
+                  </svg></div>
+
+                <div>
+
+                  <div class="rem-text"><strong>Carlos Lima</strong> não compra há 45 dias</div>
+
+                  <div class="rem-sub">Chegou coleção nova — boa hora para lembrar</div>
+
+                </div>
+
+              </div>
+
+              <div class="rem-row">
+
+                <div class="rem-icon ri-a"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+
+                    <path d="M7 2L13 11H1L7 2z" stroke="#854F0B" stroke-width="1.2" />
+
+                    <path d="M7 6v3M7 10.5v1" stroke="#854F0B" stroke-width="1.2" />
+
+                  </svg></div>
+
+                <div>
+
+                  <div class="rem-text">4 clientes preferem <strong>cor azul</strong></div>
+
+                  <div class="rem-sub">Chegou o inverno — verifique seu estoque</div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <div class="sec-title">Clientes recentes</div>
+
+            <div class="card">
+
+              <div class="tbl-row tbl-hdr" style="grid-template-columns:2fr 1.3fr .8fr .8fr .5fr">
+
+                <span>Nome</span><span>Base legal</span><span>Dados</span><span>Status</span><span></span>
+
+              </div>
+
+              <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .8fr .8fr .5fr">
+
+                <div>
+
+                  <div class="cname">Ana Souza</div>
+
+                  <div class="csub">aniversário hoje</div>
+
+                </div><span class="tag tag-blue">Consentimento</span><span class="tag tag-purple">Sensível</span><span
+
+                  class="tag tag-ok">OK</span><span style="font-size:11px;color:var(--blue);cursor:pointer"
+
+                  onclick="go('clientes')">→</span>
+
+              </div>
+
+              <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .8fr .8fr .5fr">
+
+                <div>
+
+                  <div class="cname">Carlos Lima</div>
+
+                  <div class="csub">inativo 45 dias</div>
+
+                </div><span class="tag tag-blue">Contrato</span><span
+
+                  style="font-size:11px;color:var(--g500)">Básico</span><span class="tag tag-ok">OK</span><span
+
+                  style="font-size:11px;color:var(--blue);cursor:pointer" onclick="go('clientes')">→</span>
+
+              </div>
+
+              <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .8fr .8fr .5fr">
+
+                <div>
+
+                  <div class="cname">Beatriz Costa</div>
+
+                  <div class="csub">desde mar/25</div>
+
+                </div><span class="tag tag-blue">Consentimento</span><span class="tag tag-purple">Sensível</span><span
+
+                  class="tag tag-pend">Pendente</span><span style="font-size:11px;color:var(--blue);cursor:pointer"
+
+                  onclick="go('clientes')">→</span>
+
+              </div>
+
+              <div class="tbl-row" style="grid-template-columns:2fr 1.3fr .8fr .8fr .5fr">
+
+                <div>
+
+                  <div class="cname">Rodrigo Alves</div>
+
+                  <div class="csub">desde mar/25</div>
+
+                </div><span class="tag tag-blue">Obrig. legal</span><span
+
+                  style="font-size:11px;color:var(--g500)">Básico</span><span class="tag tag-ok">OK</span><span
+
+                  style="font-size:11px;color:var(--blue);cursor:pointer" onclick="go('clientes')">→</span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+
+
+  <script src="script.js"></script>
+
+
+
+</body>
+
+
+
+</html>
